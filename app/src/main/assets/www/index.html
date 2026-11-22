@@ -256,6 +256,28 @@ body:has(#spill[data-mode=ake].playing) #wCross{display:none!important}
 body.touch #gFps{left:auto;right:max(10px,env(safe-area-inset-right,0px));bottom:auto;top:calc(env(safe-area-inset-top,0px) + 58px)}
 #gFullB[hidden]{display:none}
 @media (max-width:560px){.gTop{left:max(10px,env(safe-area-inset-left,0px));transform:none;justify-content:flex-start;width:calc(100% - 175px)}.gPill{padding:6px 11px;font-size:15px}.gB{padding:7px 9px}}
+/* gjemsel, julelysmontør, elektriker */
+#spill:not([data-mode=strom]):not([data-mode=gjem]):not([data-mode=montor]):not([data-mode=elektro]) #gMål{display:none!important}
+#spill:not([data-mode=strom]):not([data-mode=montor]):not([data-mode=elektro]) #gPrompt,#spill:not([data-mode=strom]):not([data-mode=montor]):not([data-mode=elektro]) #gBrukB{display:none!important}
+#spill[data-mode=gjem] #gMål,#spill[data-mode=montor] #gMål,#spill[data-mode=elektro] #gMål{display:block!important}
+#spill[data-mode=montor] #gPkN{display:flex!important}
+#spill:not([data-mode=gjem]) #gVarsel,#spill:not([data-mode=gjem]) #gHukB{display:none!important}
+#spill:not([data-mode=elektro]) #gMeter{display:none!important}
+#spill[data-mode=elektro] #gHint,#spill[data-mode=gjem] #gHint{display:none!important}
+#gVarsel{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 62px);transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:var(--g-glass);border:1px solid var(--g-line);border-radius:999px;padding:6px 12px}
+#gVarsel span{font-size:16px}#gVarsel i{display:block;width:110px;height:9px;border-radius:5px;background:linear-gradient(90deg,#f1c75b,#ff4d5a) 0 0/calc(var(--v,0)*100%) 100% no-repeat,rgba(255,255,255,.14)}
+#gVarsel.ser{border-color:#ff4d5a;box-shadow:0 0 14px rgba(255,77,90,.5)}
+@media (max-width:560px){#gVarsel{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 200px)}}
+#gMeter{position:absolute;left:max(14px,env(safe-area-inset-left,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 30px);width:150px;background:#f1c232;border-radius:16px;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.45);color:#1b1b1b}
+body.touch #gMeter{left:auto;right:max(110px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 28px);width:130px}
+.mt-n{font:800 10px/1 Inter,sans-serif;letter-spacing:.12em;margin-bottom:6px}.mt-s{font:700 10px/1 Inter,sans-serif;margin-top:6px;opacity:.7}
+.mt-d{background:#b8c4a4;border-radius:6px;padding:8px 10px;display:flex;align-items:baseline;justify-content:flex-end;gap:6px;font-family:ui-monospace,Menlo,monospace;box-shadow:inset 0 2px 4px rgba(0,0,0,.35)}
+.mt-d b{font-size:30px;letter-spacing:.04em}.mt-d span{font-size:15px;font-weight:700}
+#gMeter.feil .mt-d{background:#d9b0a6}#gMeter.ok .mt-d{background:#b4cfa4}
+#gHukB.on{background:var(--g-red)!important;border-color:#fff}
+#gPrompt small{font-size:12px;color:var(--g-dim)}
+#spill[data-mode=montor] #gPrompt:not([hidden]),#spill[data-mode=elektro] #gPrompt:not([hidden]){display:block!important}
+#spill[data-mode=montor] #gBrukB,#spill[data-mode=elektro] #gBrukB{display:inline-block!important}
 </style>
 
 <div id="stage"></div>
@@ -3056,10 +3078,12 @@ const ui=document.createElement('div');ui.id='spill';ui.innerHTML=`
   <div class="gBtns"><button id="gHintB" class="gB">Hint <small>+20 s</small><kbd class="gK">H</kbd></button><button id="gMusB" class="gB" aria-pressed="true">♫<kbd class="gK">M</kbd></button><button id="gFullB" class="gB" title="Fullskjerm" aria-label="Fullskjerm">⛶</button><button id="gPauseB" class="gB">II<kbd class="gK">Esc</kbd></button></div>
   <div class="gAkeL"><button id="aV" class="gR big">◀</button><button id="aH" class="gR big">▶</button></div>
   <div class="gAkeR"><button id="aSkyv" class="gR">Skyv</button><button id="aBrems" class="gR">Brems</button><button id="aHopp" class="gR">Hopp</button></div>
-  <div class="gTouch"><button id="gBrukB" class="gR big">Bruk</button><button id="gKastB" class="gR big">Kast</button><button id="gSprB" class="gR">Spurt</button><button id="gJmpB" class="gR">Hopp</button></div>
+  <div class="gTouch"><button id="gHukB" class="gR">Huk</button><button id="gBrukB" class="gR big">Bruk</button><button id="gKastB" class="gR big">Kast</button><button id="gSprB" class="gR">Spurt</button><button id="gJmpB" class="gR">Hopp</button></div>
   <div id="gSekk"></div>
   <div id="gMål"></div>
   <div id="gPrompt" hidden></div>
+  <div id="gVarsel"><span>👁</span><i></i></div>
+  <div id="gMeter" hidden><div class="mt-n">MULTIMETER</div><div class="mt-d"><b id="gMeterV">— — —</b><span id="gMeterE"></span></div><div class="mt-s">V~ · AUTO</div></div>
   <div id="gToast"></div>
   <div id="gSplat"></div>
   <div id="gFps"></div>
@@ -3074,6 +3098,9 @@ const ui=document.createElement('div');ui.id='spill';ui.innerHTML=`
       <button class="gCard" id="cSno"><span class="gIco">⛄</span><b>Snøballkrig</b><span>Snømennene angriper hagen. Treff så mange du kan på to minutter.</span></button>
       <button class="gCard" id="cPakke"><span class="gIco">🎁</span><b>Pakkelevering</b><span>Hent pakker ved juletreet og lever dem i riktig rom i huset.</span></button>
       <button class="gCard" id="cStrom"><span class="gIco">🔦</span><b>Strømbrudd</b><span>Det er mørkt! Finn sikringsskapet, finn feilen og få lyset tilbake.</span></button>
+      <button class="gCard" id="cGjem"><span class="gIco">🙈</span><b>Gjemsel</b><span>Gjem deg i huset før nissen begynner å lete. Ikke la ham se deg!</span></button>
+      <button class="gCard" id="cMont"><span class="gIco">💡</span><b>Julelysmontøren</b><span>Sett opp stigen og heng julelys langs takrennene før det blir mørkt.</span></button>
+      <button class="gCard" id="cEl"><span class="gIco">🧰</span><b>Elektrikerjobben</b><span>Kunden har en feil. Mål deg fram med multimeteret og finn den.</span></button>
       <button class="gCard" id="cAke"><span class="gIco">🛷</span><b>Akebakke</b><span>Ak ned hagen gjennom portene og plukk med deg pakkene på veien.</span></button>
     </div>
     <div id="gOpts">
@@ -3081,6 +3108,7 @@ const ui=document.createElement('div');ui.id='spill';ui.innerHTML=`
       <div class="gOpt" id="optP"><span>Antall pakker</span><div class="gSeg" id="oP"><button data-v="6">6</button><button data-v="10">10</button><button data-v="15">15</button></div></div>
       <div class="gOpt" id="optPil"><span>Pil til rommet</span><div class="gSeg" id="oPil"><button data-v="1">På</button><button data-v="0">Av</button></div></div>
       <div class="gOpt" id="optSN"><span>Vanskelighet</span><div class="gSeg" id="oSN"><button data-v="lett">Lett</button><button data-v="middels">Middels</button><button data-v="vanskelig">Vanskelig</button></div></div>
+      <div class="gOpt" id="optNY"><span>Vanskelighet</span><div class="gSeg" id="oNY"><button data-v="lett">Lett</button><button data-v="middels">Middels</button><button data-v="vanskelig">Vanskelig</button></div></div>
       <div class="gOpt" id="optS"><span>Vanskelighet</span><div class="gSeg" id="oD"><button data-v="lett">Lett</button><button data-v="middels">Middels</button><button data-v="vanskelig">Vanskelig</button></div></div>
       <div class="gOpt"><span>Tid på døgnet</span><div class="gSeg" id="oT"><button data-v="dag">Dag</button><button data-v="kveld">Kveld</button></div></div>
       <div class="gOpt" id="optSens"><span>Musefølsomhet</span><div class="gSeg" id="oSens"><button data-v="0.5">Lav</button><button data-v="1">Middels</button><button data-v="1.6">Høy</button></div></div>
@@ -3096,7 +3124,13 @@ const ui=document.createElement('div');ui.id='spill';ui.innerHTML=`
 <div id="gPause" class="gOv" hidden><div class="gPanel sm"><h2>Pause</h2><p id="gPInfo"></p><button id="gRes" class="gGo">Fortsett</button><button id="gNy" class="gSec">Start på nytt</button><button id="gMeny" class="gSec">Til menyen</button></div></div>
 <div id="gDone" class="gOv" hidden><div class="gPanel sm"><p class="gKick" id="gDK">Alle nissene er funnet!</p><h2 id="gDT">0:00</h2><p id="gDInfo"></p><button id="gIgjen" class="gGo">Spill igjen</button><button id="gMeny2" class="gSec">Til menyen</button></div></div>`;
 document.body.appendChild(ui);
-const HELP={pakke:isTouch?'Gå til juletreet for å fylle sekken (3 pakker om gangen). Gå inn i rommet som står på pakken for å levere den. <b>Spurt</b> gjør deg raskere.'
+const HELP={gjem:isTouch?'Du har litt tid på å gjemme deg inne i huset. Så leter nissen. Bjellene på lua forteller hvor han er. <b>Huk</b> gjør deg vanskeligere å se, og spurting hører han.'
+  :'<b>W A S D</b> går · <b>C</b> huk (vanskeligere å se) · <b>Shift</b> spurter, men nissen hører deg · <b>Esc</b> pause. Gjem deg inne i huset – bjellene på lua forteller hvor nissen er.',
+  montor:isTouch?'Gå bort til takrenna og trykk <b>Bruk</b> for å sette opp stigen. Klatre opp og heng opp lysene du rekker. Hold <b>Bruk</b> for å klatre ned. Strekker du deg for langt, faller du.'
+  :'<b>E</b> setter opp stigen / klatrer opp / henger opp lysene · <b>Q</b> klatrer ned · strekker du deg for langt, faller du (+10 s). Til slutt plugges lysene inn ved utekontakten.',
+  elektro:isTouch?'Mål med <b>Bruk</b> på kursen i sikringsskapet, stikkontakter og koblingsbokser. Hold <b>Bruk</b> for å åpne en boks eller kontakt. Feil åpnet koster tid.'
+  :'<b>E</b> måler (sikringsskapet, stikkontakter, koblingsbokser) · <b>Q</b> åpner boksen eller kontakten · feil åpnet koster tid. Finn det første punktet der målingen ikke stemmer.',
+  pakke:isTouch?'Gå til juletreet for å fylle sekken (3 pakker om gangen). Gå inn i rommet som står på pakken for å levere den. <b>Spurt</b> gjør deg raskere.'
   :'<b>Mus</b> ser rundt · <b>W A S D</b> går · <b>Shift</b> spurter · <b>Esc</b> pause. Fyll sekken ved juletreet (3 pakker om gangen) og gå inn i rommet som står på pakken for å levere den.',
   strom:isTouch?'Du har bare en lommelykt. Finn sikringsskapet i kjelleren, få strømmen tilbake og finn feilen. <b>Bruk</b> åpner skapet og trekker ut kontakter. Batterier på gulvet gir lommelykta mer strøm.'
   :'<b>Mus</b> ser rundt · <b>W A S D</b> går · <b>Shift</b> spurter · <b>E</b> åpner skapet / trekker ut kontakter · <b>Esc</b> pause. Finn sikringsskapet i kjelleren og få lyset tilbake. Feilen kan være inne, ute ved julelysene eller ved garasjen. På middels og vanskelig står det flere kontakter rundt omkring – feil kontakt koster 10 s, og på vanskelig er det også noe som overbelaster en kurs.',ake:isTouch?'<b>◀ ▶</b> styrer · <b>Brems</b> bremser · <b>Skyv</b> gir fart på flate partier · <b>Hopp</b> hopper. Kjør gjennom portene (bom gir +3 s) og ta pakkene (−0,3 s hver).'
@@ -3105,14 +3139,16 @@ const HELP={pakke:isTouch?'Gå til juletreet for å fylle sekken (3 pakker om ga
 HELP.nisse=isTouch?'Venstre tommel: gå med spaken · Høyre tommel: dra for å se rundt · <b>Spurt</b> slår på løping · Trykk på en nisse for å ta den, eller gå helt bort til den.'
   :'<b>Mus</b> ser rundt · <b>W A S D</b> går · <b>Shift</b> spurter · <b>Mellomrom</b> hopper · <b>Klikk</b> på en nisse eller gå bort til den · <b>H</b> hint · <b>M</b> musikk · <b>Esc</b> pause';
 G.mode=LS.get('spill-valgt','nisse');G.diff=LS.get('sno-diff','middels');
-function velg(m){G.mode=m;LS.set('spill-valgt',m);ui.dataset.mode=m;[['cNisse','nisse'],['cSno','sno'],['cAke','ake'],['cPakke','pakke'],['cStrom','strom']].forEach(([id,k])=>$(id).setAttribute('aria-pressed',m===k));$('optSens').hidden=m==='ake';$('optP').hidden=$('optPil').hidden=m!=='pakke';$('optSN').hidden=m!=='strom';
+function velg(m){G.mode=m;LS.set('spill-valgt',m);ui.dataset.mode=m;[['cNisse','nisse'],['cSno','sno'],['cAke','ake'],['cPakke','pakke'],['cStrom','strom'],['cGjem','gjem'],['cMont','montor'],['cEl','elektro']].forEach(([id,k])=>$(id).setAttribute('aria-pressed',m===k));$('optNY').hidden=!['gjem','montor','elektro'].includes(m);[...$('oNY').children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===LS.get('niv-'+m,'middels')));$('optSens').hidden=m==='ake';$('optP').hidden=$('optPil').hidden=m!=='pakke';$('optSN').hidden=m!=='strom';
   $('optN').hidden=m!=='nisse';$('optS').hidden=m!=='sno';$('gHelp').innerHTML=HELP[m];visBest()}
 function seg(id,key,val,cb){const el=$(id);const set=v=>{[...el.children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.v==String(v)))};set(val);
   el.onclick=e=>{const b=e.target.closest('button');if(!b)return;set(b.dataset.v);cb(b.dataset.v)}}
 seg('oN','n',G.N,v=>{G.N=+v;LS.set('nisse-n',G.N);visBest()});
 seg('oT','t',G.tid,v=>{G.tid=v;LS.set('nisse-tid',v);tidSett()});
 seg('oM','m',G.music?1:0,v=>{G.music=v==='1';LS.set('spill-musikk',G.music);$('gMusB').setAttribute('aria-pressed',G.music)});
-function visBest(){if(G.mode==='pakke'){const b=LS.get('pakke-best-'+PK.N,null);$('gBest').textContent=b!=null?`Beste tid med ${PK.N} pakker: ${fmtT(b)}`:`Ingen rekord med ${PK.N} pakker ennå`;return}
+function visBest(){if(G.mode==='gjem'){const n=LS.get('niv-gjem','middels'),b=LS.get('gjem-best-'+n,0);$('gBest').textContent=b?`Du har vunnet ${b} gang${b>1?'er':''} på ${n}`:`Ingen seire på ${n} ennå`;return}
+  if(G.mode==='montor'||G.mode==='elektro'){const n=LS.get('niv-'+G.mode,'middels'),b=LS.get(G.mode+'-best-'+n,null);$('gBest').textContent=b!=null?`Beste tid på ${n}: ${fmtT(b)}`:`Ingen rekord på ${n} ennå`;return}
+  if(G.mode==='pakke'){const b=LS.get('pakke-best-'+PK.N,null);$('gBest').textContent=b!=null?`Beste tid med ${PK.N} pakker: ${fmtT(b)}`:`Ingen rekord med ${PK.N} pakker ennå`;return}
   if(G.mode==='strom'){const b=LS.get('strom-best-'+ST.niv,null);$('gBest').textContent=b!=null?`Beste tid på ${ST.niv}: ${fmtT(b)}`:`Ingen rekord på ${ST.niv} ennå`;return}
   if(G.mode==='ake'){const b=LS.get('ake-best',null);$('gBest').textContent=b!=null?`Beste tid i akebakken: ${fmtT2(b)}`:'Ingen rekord i akebakken ennå';return}
   if(G.mode==='sno'){const b=LS.get('sno-best-'+G.diff,null);$('gBest').textContent=b!=null?`Rekord på ${G.diff}: ${b} poeng`:`Ingen rekord på ${G.diff} ennå`;return}
@@ -3126,7 +3162,7 @@ let toastT=null;function toast(t){const e=$('gToast');e.textContent=t;e.classLis
 
 /* ---------- spillflyt ---------- */
 const S={t0:0,tid:0,straff:0,funnet:0,hintTil:0,hintN:null,lastT:0};
-function startSpill(){G.mode='nisse';ui.dataset.mode='nisse';snoRydd();akeRydd();pakkeRydd();stromRydd();ac();ui.classList.add('playing');$('gMenu').hidden=true;$('gDone').hidden=true;$('gPause').hidden=true;$('gHud').hidden=false;
+function startSpill(){G.mode='nisse';ui.dataset.mode='nisse';snoRydd();akeRydd();pakkeRydd();stromRydd();nyeRydd();ac();ui.classList.add('playing');$('gMenu').hidden=true;$('gDone').hidden=true;$('gPause').hidden=true;$('gHud').hidden=false;
   controls.autoRotate=false;tidSett();
   if(!walkOn)walkStart();
   plasserNisser(G.N);$('gTot').textContent=NIS.length;$('gNum').textContent=0;
@@ -3136,21 +3172,22 @@ function startSpill(){G.mode='nisse';ui.dataset.mode='nisse';snoRydd();akeRydd()
   setTimeout(()=>{if(!isTouch&&document.pointerLockElement!==cv&&G.on&&!G.paused)$('gClick').hidden=false},600);
   toast(`Finn ${NIS.length} nisser!`)}
 function pause(){G.paused=true;wkeys={};wjoy={x:0,y:0,id:null};knob.style.transform='';if(document.pointerLockElement)document.exitPointerLock();
-  $('gPInfo').textContent=G.mode==='pakke'?`${PK.levert} av ${PK.liste.length} levert · ${fmtT(PK.tid)}`:G.mode==='strom'?`${fmtT(ST.tid)}`:G.mode==='ake'?`Tid ${fmtT2(AK.tid+AK.straff-AK.bonus)}`:G.mode==='sno'?`${SNO.poeng} poeng · ${fmtT(Math.ceil(SNO.tid))} igjen`:`${S.funnet} av ${NIS.length} funnet · ${fmtT(S.tid+S.straff)}`;$('gPause').hidden=false}
+  $('gPInfo').textContent=G.mode==='gjem'?`${fmtT(Math.ceil(GJ.t))} igjen`:G.mode==='montor'?`${MT.seg.filter(s=>s.hengt).length} av ${MT.seg.length} lysslynger`:G.mode==='elektro'?`${fmtT(EL.tid)}`:G.mode==='pakke'?`${PK.levert} av ${PK.liste.length} levert · ${fmtT(PK.tid)}`:G.mode==='strom'?`${fmtT(ST.tid)}`:G.mode==='ake'?`Tid ${fmtT2(AK.tid+AK.straff-AK.bonus)}`:G.mode==='sno'?`${SNO.poeng} poeng · ${fmtT(Math.ceil(SNO.tid))} igjen`:`${S.funnet} av ${NIS.length} funnet · ${fmtT(S.tid+S.straff)}`;$('gPause').hidden=false}
 function resume(){$('gPause').hidden=true;G.paused=false;S.lastT=performance.now();wT=performance.now();if(!isTouch&&G.mode!=='ake'){lock()}}
 // tilbakeknappen i Android-appen: pause → meny → lukk appen
 window.__spillPause=()=>{if(G.on&&!G.paused)pause();try{AC&&AC.suspend()}catch(e){}};
 window.__spillTilbake=()=>{if(typeof ST!=='undefined'&&ST.skapÅpen){skapLukk();return true}if(G.on&&!G.paused){gamePause();return true}if(!$('gMenu').hidden)return false;tilMeny();return true};
 function tilMeny(){G.on=false;G.paused=true;if(document.pointerLockElement)document.exitPointerLock();ui.classList.remove('playing');
   $('gHud').hidden=true;$('gPause').hidden=true;$('gDone').hidden=true;$('gMenu').hidden=false;visBest();
-  NIS.forEach(o=>NG.remove(o.g));NIS.length=0;snoRydd();akeRydd();pakkeRydd();stromRydd();walkStop();setLevel('A');controls.autoRotate=true;menyKamera()}
+  NIS.forEach(o=>NG.remove(o.g));NIS.length=0;snoRydd();akeRydd();pakkeRydd();stromRydd();nyeRydd();walkStop();setLevel('A');controls.autoRotate=true;menyKamera()}
 function ferdig(){G.ending=true;G.on=false;G.paused=true;sfxSlutt();if(document.pointerLockElement)document.exitPointerLock();
   const tot=S.tid+S.straff,k='nisse-best-'+NIS.length,b=LS.get(k,null),rek=b==null||tot<b;if(rek)LS.set(k,tot);
   $('gDK').textContent='Alle nissene er funnet!';$('gDT').textContent=fmtT(tot);$('gDInfo').innerHTML=(rek?'<b>Ny rekord!</b> ':`Rekorden er ${fmtT(b)}. `)+(S.straff?`Inkludert ${S.straff} s for hint.`:'Uten hint.');
   setTimeout(()=>{$('gDone').hidden=false},900)}
 $('cNisse').onclick=()=>velg('nisse');$('cSno').onclick=()=>velg('sno');
-$('cAke').onclick=()=>velg('ake');$('cPakke').onclick=()=>velg('pakke');$('cStrom').onclick=()=>velg('strom');
-const startValgt=()=>G.mode==='sno'?startSno():G.mode==='ake'?startAke():G.mode==='pakke'?startPakke():G.mode==='strom'?startStrom():startSpill();
+$('cAke').onclick=()=>velg('ake');$('cGjem').onclick=()=>velg('gjem');$('cMont').onclick=()=>velg('montor');$('cEl').onclick=()=>velg('elektro');
+$('oNY').onclick=e=>{const b=e.target.closest('button');if(!b)return;LS.set('niv-'+G.mode,b.dataset.v);[...$('oNY').children].forEach(q=>q.setAttribute('aria-pressed',q===b));visBest()};$('cPakke').onclick=()=>velg('pakke');$('cStrom').onclick=()=>velg('strom');
+const startValgt=()=>G.mode==='gjem'?startGjem():G.mode==='montor'?startMont():G.mode==='elektro'?startEl():G.mode==='sno'?startSno():G.mode==='ake'?startAke():G.mode==='pakke'?startPakke():G.mode==='strom'?startStrom():startSpill();
 $('gStart').onclick=startValgt;$('gRes').onclick=resume;$('gNy').onclick=()=>{$('gPause').hidden=true;startValgt()};$('gMeny').onclick=tilMeny;$('gIgjen').onclick=startValgt;$('gMeny2').onclick=tilMeny;
 $('gPauseB').onclick=()=>gamePause();
 // fullskjerm der nettleseren tillater det (skjules ellers, og i installert app som allerede er fullskjerm)
@@ -3206,6 +3243,9 @@ window.gameStep=function(){const now=performance.now(),dt=Math.min(0.1,(now-tPre
   if(mv>0.05){G.bob+=dt*(spr?13:8.5)*mv;camera.position.y+=Math.sin(G.bob)*(spr?0.035:0.018)}
   if(G.mode==='sno'){snoStep(dt,SNO.ms);return}
   if(G.mode==='pakke'){pakkeStep(dt,now);return}
+  if(G.mode==='gjem'){gjemStep(dt,now);return}
+  if(G.mode==='montor'){montStep(dt,now);return}
+  if(G.mode==='elektro'){elStep(dt,now);return}
   if(G.mode==='strom'){if(ST.skapÅpen){wkeys={}}stromStep(dt,now);return}
   // nær nok + fri sikt = funnet; fnis når du er i nærheten
   const c=camera.position;
@@ -3279,7 +3319,7 @@ function sluttSno(grunn){if(G.ending)return;G.ending=true;G.on=false;G.paused=tr
   $('gDInfo').innerHTML=(rek&&SNO.poeng>0?'<b>Ny rekord!</b> ':b!=null?`Rekorden er ${b} poeng. `:'')+`${SNO.treff} snømenn truffet, ${SNO.hode} av dem på hodet.`;
   setTimeout(()=>{$('gDone').hidden=false},1100)}
 function snoRydd(){[...SNO.F.map(f=>f.g),...SNO.B.map(b=>b.m),...SNO.R.map(r=>r.m)].forEach(o=>{if(o.parent)o.parent.remove(o)});SNO.F.length=SNO.B.length=SNO.R.length=0;handBall.visible=false;PYNT.forEach(p=>p.visible=true);$('gSplat').classList.remove('vis')}
-function startSno(){snoRydd();akeRydd();pakkeRydd();stromRydd();G.mode='sno';ui.dataset.mode='sno';ac();ui.classList.add('playing');$('gMenu').hidden=true;$('gDone').hidden=true;$('gPause').hidden=true;$('gHud').hidden=false;
+function startSno(){snoRydd();akeRydd();pakkeRydd();stromRydd();nyeRydd();G.mode='sno';ui.dataset.mode='sno';ac();ui.classList.add('playing');$('gMenu').hidden=true;$('gDone').hidden=true;$('gPause').hidden=true;$('gHud').hidden=false;
   controls.autoRotate=false;tidSett();PYNT.forEach(p=>p.visible=false);NIS.forEach(o=>NG.remove(o.g));NIS.length=0;
   if(walkOn)walkStop();walkStart();
   const sx=-6.5,sz=5.5;wPlace(sx,sz,null,yawTo(sx,sz,sx-10,sz));wpitch=-0.02;SNO.forrige.copy(wp);SNO.vel.set(0,0,0);
@@ -3402,7 +3442,7 @@ function akeTilStart(){const[a,b]=RUTE[0],[c,d]=RUTE[1];AK.x=a;AK.z=b;AK.y=gH(a,
   AK.porter.forEach(p=>{p.ferdig=false;p.g.children.forEach(o=>{if(o.material===p.fm)o.visible=true})});AK.pakker.forEach(p=>{p.tatt=false;p.g.visible=true;p.g.scale.setScalar(1)});
   AK.state='telle';AK.telle=3.2;AK.camP.set(a-Math.cos(AK.psi)*4,AK.y+2,b-Math.sin(AK.psi)*4);AK.camL.set(a,AK.y+0.5,b);akeHud()}
 function akeHud(){$('gPort').innerHTML=`<span class="gSI">⛳</span><b>${AK.porter.filter(p=>p.ferdig==='ok').length}</b><span>/ ${AK.porter.length}</span>`;$('gPak').innerHTML=`<span class="gSI">🎁</span><b>${AK.pakker.filter(p=>p.tatt).length}</b><span>/ ${AK.pakker.length}</span>`}
-function startAke(){snoRydd();pakkeRydd();stromRydd();NIS.forEach(o=>NG.remove(o.g));NIS.length=0;G.mode='ake';ui.dataset.mode='ake';ac();ui.classList.add('playing');$('gMenu').hidden=true;$('gDone').hidden=true;$('gPause').hidden=true;$('gHud').hidden=false;
+function startAke(){snoRydd();pakkeRydd();stromRydd();nyeRydd();NIS.forEach(o=>NG.remove(o.g));NIS.length=0;G.mode='ake';ui.dataset.mode='ake';ac();ui.classList.add('playing');$('gMenu').hidden=true;$('gDone').hidden=true;$('gPause').hidden=true;$('gHud').hidden=false;
   if(walkOn)walkStop();controls.autoRotate=false;setLevel('A');tidSett();AKG.visible=true;
   tDrone.setAttribute('aria-pressed','false');applyDrone();   // ren snøbakke: dronemodellens busker og trær tas bort i akebakken
   camera.fov=68;camera.updateProjectionMatrix();G.fov=68;
@@ -3492,7 +3532,7 @@ const iRom=(r,x,y,z)=>pip(r.poly,x,z)&&(r.id==='veranda'?y>-0.6&&y<1.5:lvOf(y)==
 function hudPil(tx,ty,tz,navn){const c=camera.position,a=yawTo(c.x,c.z,tx,tz)-wyaw,dist=Math.hypot(tx-c.x,tz-c.z);$('gHint').hidden=false;$('gArrow').style.transform=`rotate(${(-a*180/Math.PI)-90}deg)`;
   const tl=inHouse(tx,tz)?lvOf(ty):null,ml=inHouse(c.x,c.z)?lvOf(wp.y):null,o={B:0,G:1,U:2};
   $('gHintTxt').textContent=navn+' · '+Math.round(dist)+' m'+(tl&&ml&&tl!==ml?(o[tl]>o[ml]?' · opp':' · ned'):tl&&!ml&&tl!=='G'?(o[tl]>1?' · opp':' · ned'):'')}
-function gåStart(mode){snoRydd();akeRydd();pakkeRydd();stromRydd();NIS.forEach(o=>NG.remove(o.g));NIS.length=0;G.mode=mode;ui.dataset.mode=mode;ac();ui.classList.add('playing');
+function gåStart(mode){snoRydd();akeRydd();pakkeRydd();stromRydd();nyeRydd();NIS.forEach(o=>NG.remove(o.g));NIS.length=0;G.mode=mode;ui.dataset.mode=mode;ac();ui.classList.add('playing');
   $('gMenu').hidden=true;$('gDone').hidden=true;$('gPause').hidden=true;$('gHud').hidden=false;controls.autoRotate=false;tidSett();if(walkOn)walkStop();walkStart();
   G.on=true;G.ending=false;G.paused=false;G.sprintTouch=false;$('gSprB').classList.remove('on');wkeys={};if(!isTouch)lock();
   setTimeout(()=>{if(!isTouch&&document.pointerLockElement!==cv&&G.on&&!G.paused)$('gClick').hidden=false},600)}
@@ -3681,8 +3721,218 @@ seg('oP','p',PK.N,v=>{PK.N=+v;LS.set('pakke-n',PK.N);visBest()});seg('oPil','pil
 seg('oSN','sn',ST.niv,v=>{ST.niv=v;LS.set('strom-niv',v);visBest()});
 velg(G.mode);
 seg('oY','y',YT.valg,v=>{YT.valg=v;LS.set('spill-ytelse',v);YT.lav=0;ytelseStart()});
+/* =====================================================================
+   Spill 6: Gjemsel  ·  Spill 7: Julelysmontøren  ·  Spill 8: Elektrikerjobben
+   ===================================================================== */
+const NIV=m=>LS.get('niv-'+m,'middels');
+function nyeRydd(){gjemRydd();montRydd();elRydd();G.huk=false;$('gHukB')&&$('gHukB').classList.remove('on')}
+function dagSett(){if(LYS.kveld)$('tKveld').click();if(!LYS.on&&$('tLys'))$('tLys').click()}
+const _e1=new THREE.Vector3(),_e2=new THREE.Vector3();
+function sikt(x,y,z,r,strengt){const c=camera.position,dx=x-wp.x,dz=z-wp.z,h=Math.hypot(dx,dz);if(h>r||Math.abs(y-(wp.y+0.8))>1.6)return false;if(!strengt)return h;
+  camera.getWorldDirection(_e1);_e2.set(x-c.x,y-c.y,z-c.z).normalize();return _e2.dot(_e1)>0.8?h:false}
+function visPrompt(tekst){const pe=$('gPrompt');pe.hidden=!tekst;if(tekst)pe.innerHTML=(isTouch?'Trykk <b>Bruk</b>':'Trykk <b>E</b>')+' '+tekst;$('gBrukB').classList.toggle('klar',!!tekst)}
+function målTekst(t){const e=$('gMål');if(e.textContent===t)return;e.textContent=t;e.classList.remove('ny');void e.offsetWidth;e.classList.add('ny')}
+
+/* ---------------- Gjemsel ---------------- */
+const GJN={lett:{gjem:35,leter:60,fart:1.0,syn:5,fyll:1.3},middels:{gjem:30,leter:90,fart:1.35,syn:6.5,fyll:0.85},vanskelig:{gjem:25,leter:120,fart:1.7,syn:8,fyll:0.5}};
+const GJ={fase:null,t:0,nis:null,lys:null,rom:null,vei:[],pause:0,sett:0,mål:null,steg:0,hørtT:0,besøkt:[],graf:null,niv:'middels'};
+function romGraf(){if(GJ.graf)return GJ.graf;const R=rooms.filter(r=>!r.custom&&r.poly&&Y[r.lv]!=null&&!['u-balk','tomt','veranda'].includes(r.id));const E=new Map();R.forEach(r=>E.set(r,[]));
+  const kant=(a,b,c,d)=>{// felles vegg: parallelle kanter som ligger tett og overlapper
+    const ax=b[0]-a[0],az=b[1]-a[1],cx=d[0]-c[0],cz=d[1]-c[1],la=Math.hypot(ax,az),lc=Math.hypot(cx,cz);if(la<0.3||lc<0.3)return null;
+    const ux=ax/la,uz=az/la;if(Math.abs(ux*cz/lc-uz*cx/lc)>0.05)return null;const dist=Math.abs((c[0]-a[0])*-uz+(c[1]-a[1])*ux);if(dist>0.4)return null;
+    const t1=(c[0]-a[0])*ux+(c[1]-a[1])*uz,t2=(d[0]-a[0])*ux+(d[1]-a[1])*uz,lo=Math.max(0,Math.min(t1,t2)),hi=Math.min(la,Math.max(t1,t2));if(hi-lo<0.6)return null;
+    const m=(lo+hi)/2;return[a[0]+ux*m-uz*dist/2*Math.sign((c[0]-a[0])*-uz+(c[1]-a[1])*ux),a[1]+uz*m+ux*dist/2*Math.sign((c[0]-a[0])*-uz+(c[1]-a[1])*ux)]};
+  for(let i=0;i<R.length;i++)for(let j=i+1;j<R.length;j++){const A=R[i],B=R[j];if(A.lv!==B.lv)continue;let best=null;
+    for(let p=0;p<A.poly.length&&!best;p++)for(let q=0;q<B.poly.length&&!best;q++){best=kant(A.poly[p],A.poly[(p+1)%A.poly.length],B.poly[q],B.poly[(q+1)%B.poly.length])}
+    if(best){E.get(A).push({til:B,p:best});E.get(B).push({til:A,p:best})}}
+  [['b-trapp','kjtrapp'],['trapp','u-gang']].forEach(([a,b])=>{const A=R.find(r=>r.id===a),B=R.find(r=>r.id===b);if(A&&B){E.get(A).push({til:B,p:romP(A),trapp:true});E.get(B).push({til:A,p:romP(A),trapp:true})}});
+  GJ.graf={R,E};return GJ.graf}
+function romVed(x,y,z){const lv=lvOf(y);return romGraf().R.find(r=>r.lv===lv&&pip(r.poly,x,z))||null}
+function finnVei(fra,til){const{E}=romGraf(),prev=new Map([[fra,null]]),q=[fra];while(q.length){const r=q.shift();if(r===til)break;for(const e of E.get(r)||[])if(!prev.has(e.til)){prev.set(e.til,{r,e});q.push(e.til)}}
+  if(!prev.has(til))return null;const v=[];let r=til;while(prev.get(r)){const{r:p,e}=prev.get(r);v.unshift({x:e.p[0],z:e.p[1],y:Y[r.lv],rom:r,trapp:e.trapp,fraY:Y[p.lv]});r=p}return v}
+function gjemNytt(mål){const n=GJ.nis,fra=GJ.rom;const vei=finnVei(fra,mål)||[];const q=rndIn(mål.poly)||romP(mål);vei.push({x:q[0],z:q[1],y:Y[mål.lv],rom:mål});GJ.vei=vei;GJ.mål=mål}
+function velgRom(){const{R,E}=romGraf(),meg=romVed(wp.x,wp.y,wp.z);GJ.besøkt=GJ.besøkt.slice(-4);
+  if(meg&&Math.random()<0.45){const nb=(E.get(meg)||[]).map(e=>e.til).concat([meg]);return nb[Math.floor(Math.random()*nb.length)]}
+  const k=R.filter(r=>!GJ.besøkt.includes(r)&&r!==GJ.rom);return k[Math.floor(Math.random()*k.length)]||R[0]}
+function startGjem(){gåStart('gjem');GJ.niv=NIV('gjem');const n=GJN[GJ.niv];
+  if(!GJ.nis){const g=lagNisse();g.scale.setScalar(2.7);g.traverse(o=>{if(o.isMesh)o.raycast=()=>{}});XM.add(g);GJ.nis=g;const l=new THREE.PointLight(0xffc070,0,5,1.6);l.position.set(0.25,0.45,0.15);g.add(l);GJ.lys=l}
+  GJ.nis.visible=true;GJ.lys.intensity=YT.niv>0&&LYS.kveld?0.9:0;GJ.nis.position.set(W+T+1.8,RAMPE.yw,9.2);GJ.nis.rotation.y=-Math.PI/2;
+  Object.assign(GJ,{fase:'gjem',t:n.gjem,rom:null,vei:[],pause:0,sett:0,steg:0,besøkt:[],hørtT:0});
+  wToRoom(rooms.find(r=>r.id==='stue'));målTekst(`Gjem deg inne i huset! Nissen begynner å lete om ${n.gjem} sekunder.`);$('gVarsel').style.setProperty('--v',0);toast('Gjem deg!')}
+function gjemRydd(){if(GJ.nis){GJ.nis.visible=false;GJ.lys.intensity=0}GJ.fase=null;window.G_WLK=2.1}
+function gjemSlutt(vant){if(G.ending)return;G.ending=true;sfxSlutt();if(document.pointerLockElement)document.exitPointerLock();
+  const n=GJN[GJ.niv],k='gjem-best-'+GJ.niv,b=LS.get(k,0)||0;let rek=false;if(vant&&!b){LS.set(k,1)}if(vant)LS.set(k,(b||0)+1);
+  setTimeout(()=>{if(G.mode!=='gjem')return;G.on=false;G.paused=true;$('gDK').textContent=vant?'Nissen fant deg ikke!':'Nissen fant deg!';$('gDT').textContent=vant?'Du vant':'Tatt!';
+    $('gDInfo').innerHTML=vant?`Du holdt deg skjult i ${n.leter} sekunder. Seire på ${GJ.niv}: ${(b||0)+1}.`:`Du klarte ${fmtT(n.leter-GJ.t)} av ${fmtT(n.leter)}.`;$('gDone').hidden=false},vant?900:1400)}
+function gjemStep(dt,now){const n=GJN[GJ.niv],g=GJ.nis,c=camera.position;
+  window.G_WLK=G.huk?1.0:2.1;if(G.huk){camera.position.y-=0.72;if(G.sprintTouch||wkeys.ShiftLeft||wkeys.ShiftRight){}}
+  GJ.t-=dt;$('gTime').textContent=fmtT(Math.ceil(GJ.t));
+  if(GJ.fase==='gjem'){målTekst(`Gjem deg inne i huset! Nissen begynner å lete om ${Math.ceil(GJ.t)} sekunder.`);
+    if(GJ.t<=0){if(!inHouse(wp.x,wp.z)||!romVed(wp.x,wp.y,wp.z)){målTekst('Du var ikke inne i huset!');gjemSlutt(false);return}
+      GJ.fase='leter';GJ.t=n.leter;GJ.rom=romGraf().R.find(r=>r.id==='entre')||romGraf().R[0];const q=romP(GJ.rom);g.position.set(q[0],Y[GJ.rom.lv],q[1]);gjemNytt(velgRom());
+      toast('Nissen leter!');const a=ac();if(a){const t=a.currentTime;[0,0.15,0.3].forEach(d=>bjelle(t+d,0.12))}}
+    return}
+  if(GJ.fase!=='leter')return;
+  målTekst(`Hold deg skjult! ${G.huk?'Du sitter på huk.':isTouch?'Trykk Huk for å bli mindre synlig.':'Trykk C for å gå ned på huk.'}`);
+  if(GJ.t<=0){GJ.t=0;GJ.fase='slutt';gjemSlutt(true);return}
+  // hører nissen deg?
+  const dist=Math.hypot(g.position.x-wp.x,g.position.z-wp.z),sammeLv=lvOf(wp.y)===lvOf(g.position.y+0.5),spr=gSpr()&&(wkeys.KeyW||wkeys.KeyA||wkeys.KeyS||wkeys.KeyD||Math.hypot(wjoy.x,wjoy.y)>0.1);
+  const går=!G.huk&&(wkeys.KeyW||wkeys.KeyA||wkeys.KeyS||wkeys.KeyD||Math.hypot(wjoy.x,wjoy.y)>0.1);
+  if(now-GJ.hørtT>4000&&((spr&&dist<(sammeLv?10:6))||(går&&dist<3.2&&sammeLv))){const meg=romVed(wp.x,wp.y,wp.z);if(meg&&GJ.rom){GJ.hørtT=now;gjemNytt(meg);toast('Nissen hørte noe …')}}
+  // ser nissen deg?
+  const øye=_e1.set(g.position.x,g.position.y+1.05,g.position.z),fx=Math.sin(g.rotation.y),fz=Math.cos(g.rotation.y),dx=c.x-øye.x,dz=c.z-øye.z,dd=Math.hypot(dx,dz);
+  const syn=n.syn*(G.huk?0.5:1),vink=(dx*fx+dz*fz)/Math.max(dd,1e-3);
+  const ser=sammeLv&&dd<syn&&vink>0.55&&losP(øye.clone(),c.clone());
+  GJ.sett=Math.max(0,Math.min(1,GJ.sett+(ser?dt/n.fyll*(dd<2?2:1):-dt*0.35)));$('gVarsel').style.setProperty('--v',GJ.sett.toFixed(3));$('gVarsel').classList.toggle('ser',ser);
+  if(GJ.sett>=1){målTekst('Nissen så deg!');gjemSlutt(false);return}
+  // bevegelse
+  let fart=n.fart*(GJ.sett>0.35?1.6:1);
+  if(GJ.sett>0.35&&ser){const a=Math.atan2(dx,dz);g.rotation.y=a;const s=Math.min(fart*dt,Math.max(0,dd-0.5));g.position.x+=Math.sin(a)*s;g.position.z+=Math.cos(a)*s;GJ.rom=romVed(g.position.x,g.position.y+0.5,g.position.z)||GJ.rom;GJ.vei=[]}
+  else if(GJ.pause>0){GJ.pause-=dt;g.rotation.y+=Math.sin(now/500)*dt*1.4}
+  else{if(!GJ.vei.length){GJ.besøkt.push(GJ.rom);gjemNytt(velgRom());GJ.pause=0.8+Math.random()*1.4}
+    const p=GJ.vei[0];if(p){const vx=p.x-g.position.x,vz=p.z-g.position.z,L=Math.hypot(vx,vz);
+      if(L<0.08){g.position.set(p.x,p.y,p.z);GJ.rom=p.rom;GJ.vei.shift();if(!GJ.vei.length)GJ.pause=1.2+Math.random()*1.5}
+      else{const s=Math.min(L,fart*dt);g.position.x+=vx/L*s;g.position.z+=vz/L*s;g.rotation.y=Math.atan2(vx,vz);
+        if(p.trapp){const k=1-Math.min(1,L/2.5);g.position.y=p.fraY+(p.y-p.fraY)*k}else g.position.y+=(p.y-g.position.y)*Math.min(1,dt*6)}}}
+  g.children.forEach(()=>{});g.position.y+=0;GJ.nis.rotation.z=Math.sin(now/180)*0.04;
+  // bjeller på lua: lyden forteller hvor nissen er
+  GJ.steg+=dt;if(GJ.steg>0.5&&GJ.pause<=0){GJ.steg=0;const d=Math.hypot(g.position.x-wp.x,g.position.z-wp.z)+Math.abs(g.position.y-wp.y)*3;if(d<16){const a=ac();if(a){const pan=Math.max(-1,Math.min(1,-Math.sin(Math.atan2(g.position.x-c.x,g.position.z-c.z)-wyaw-Math.PI)));
+    const v=0.07*(1-d/16)*(sammeLv?1:0.5);const pn=a.createStereoPanner?a.createStereoPanner():null,gn=a.createGain();gn.gain.value=1;if(pn){pn.pan.value=pan;gn.connect(pn);pn.connect(a.destination)}else gn.connect(a.destination);bjelle(a.currentTime,v,gn)}}}}
+
+/* ---------------- Julelysmontøren ---------------- */
+const MTN={lett:{deler:['N'],tid:300,rek:1.45},middels:{deler:['N','S'],tid:330,rek:1.35},vanskelig:{deler:['N','S','GS','GN'],tid:360,rek:1.25}};
+// takrennene: linje, høyde, hvilken vei stigen står ut fra veggen
+const RENNER={N:{akse:'z',fast:8.04,fra:-0.6,til:11.55,y:2.66,ut:+1,n:5,navn:'nordsiden av huset'},S:{akse:'z',fast:-0.72,fra:-0.6,til:11.55,y:2.66,ut:-1,n:5,navn:'sørsiden av huset'},
+  GS:{akse:'x',fast:1.92,fra:13.05,til:19.35,y:3.27,ut:-1,n:3,navn:'garasjen'},GN:{akse:'x',fast:8.73,fra:13.05,til:19.35,y:3.27,ut:+1,n:3,navn:'garasjen'}};
+const MT={seg:[],stige:null,påStige:false,stigePos:null,tid:0,frist:0,plugget:false,kontakt:null,falt:0,niv:'middels',skumring:false};
+const STIGE=(()=>{const g=new THREE.Group(),inn=new THREE.Group();inn.name='helning';g.add(inn);const m=std(0xb8bcc2,{roughness:.4,metalness:.6});
+  [-0.22,0.22].forEach(z=>{const r=new THREE.Mesh(new THREE.BoxGeometry(0.035,1,0.05),m);r.position.z=z;r.name='ski';inn.add(r)});
+  for(let i=0;i<14;i++){const t=new THREE.Mesh(new THREE.CylinderGeometry(0.014,0.014,0.44,8),m);t.rotation.x=Math.PI/2;t.name='trinn';t.userData.i=i;inn.add(t)}g.visible=false;XM.add(g);return g})();
+function stigeForm(h){const inn=STIGE.getObjectByName('helning');const n=Math.max(6,Math.round(h/0.28));inn.children.forEach(o=>{if(o.name==='ski'){o.scale.y=h;o.position.y=h/2}else{o.visible=o.userData.i<n;o.position.y=(o.userData.i+0.5)/n*h}})}
+function lagSeg(r,a,b){const L=Math.abs(b-a),n=Math.max(6,Math.round(L/0.25)),g=new THREE.Group(),farger=[0xff4d4d,0xffd24d,0x5dd36a,0x4da3ff,0xff8df0];
+  const mats=farger.map(c=>new THREE.MeshBasicMaterial({color:0x3a3a3a}));const geo=new THREE.SphereGeometry(0.035,8,6);const pts=[];
+  for(let i=0;i<=n;i++){const t=i/n,v=a+(b-a)*t,sag=-Math.sin(t*Math.PI)*0.08;const x=r.akse==='z'?r.fast:v,z=r.akse==='z'?v:r.fast;pts.push(new THREE.Vector3(x,r.y+sag,z));
+    if(i%1===0){const m=new THREE.Mesh(geo,mats[i%5]);m.position.set(x,r.y+sag-0.05,z);m.userData.farge=farger[i%5];g.add(m)}}
+  g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x1d3b23})));g.visible=false;XM.add(g);
+  // kroker som viser hvor lysene skal henge
+  const kr=new THREE.Group();[a+(b-a)*0.15,(a+b)/2,a+(b-a)*0.85].forEach(v=>{const m=new THREE.Mesh(new THREE.TorusGeometry(0.035,0.008,6,12,Math.PI*1.4),new THREE.MeshBasicMaterial({color:0xf1c75b}));m.position.set(r.akse==='z'?r.fast:v,r.y-0.04,r.akse==='z'?v:r.fast);kr.add(m)});XM.add(kr);
+  const mid=(a+b)/2;return{r,a,b,g,kr,hengt:false,x:r.akse==='z'?r.fast:mid,z:r.akse==='z'?mid:r.fast,y:r.y}}
+const KONTAKT=(()=>{const g=new THREE.Group(),b=new THREE.Mesh(new THREE.BoxGeometry(0.03,0.11,0.11),std(0x9aa0a6,{roughness:.5}));g.add(b);const l=new THREE.Mesh(new THREE.BoxGeometry(0.035,0.04,0.08),std(0x6b7076));l.position.y=0.04;g.add(l);
+  g.position.set(W+T+0.02,0.55,7.9);g.visible=false;XM.add(g);return g})();
+function startMont(){gåStart('montor');MT.niv=NIV('montor');const n=MTN[MT.niv];dagSett();JUL.parts.forEach(p=>p.visible=false);JUL.lights.forEach(l=>l.visible=false);LYKTER.forEach(l=>l.visible=false);
+  MT.seg.forEach(s=>{XM.remove(s.g);XM.remove(s.kr)});MT.seg=[];n.deler.forEach(k=>{const r=RENNER[k],L=(r.til-r.fra)/r.n;for(let i=0;i<r.n;i++)MT.seg.push(lagSeg(r,r.fra+i*L,r.fra+(i+1)*L))});
+  Object.assign(MT,{påStige:false,stigePos:null,tid:0,frist:n.tid,plugget:false,falt:0,skumring:false});STIGE.visible=false;KONTAKT.visible=true;
+  const sx=W+T+3.5,sz=4;wPlace(sx,sz,null,yawTo(sx,sz,W,sz));wpitch=0.15;montHud();toast('Heng opp julelysene før det blir mørkt!')}
+function montRydd(){MT.seg.forEach(s=>{XM.remove(s.g);XM.remove(s.kr)});MT.seg=[];STIGE.visible=false;KONTAKT.visible=false;if(MT.påStige){MT.påStige=false;walkOn=true}
+  if(G.mode!=='montor'&&MT.skjult){}JUL.parts.forEach(p=>p.visible=JUL.on);JUL.lights.forEach(l=>l.visible=true);LYKTER.forEach(l=>l.visible=true)}
+function montHud(){const h=MT.seg.filter(s=>s.hengt).length;$('gPkN').innerHTML=`<span class="gSI">💡</span><b>${h}</b><span>/ ${MT.seg.length}</span>`}
+function rennerNær(){let best=null,bd=1e9;for(const k of MTN[MT.niv].deler){const r=RENNER[k],v=r.akse==='z'?wp.z:wp.x,perp=(r.akse==='z'?wp.x:wp.z)-r.fast;
+    if(v<r.fra-0.3||v>r.til+0.3)continue;const ut=perp*r.ut;if(ut<0.15||ut>2.2)continue;if(ut<bd){bd=ut;best={r,v:Math.max(r.fra+0.2,Math.min(r.til-0.2,v))}}}return best}
+function settStige(p){const r=p.r,ut=0.75;const bx=r.akse==='z'?r.fast+r.ut*ut:p.v,bz=r.akse==='z'?p.v:r.fast+r.ut*ut;let gy=wGround(bx,r.y-0.3,bz);if(!(gy>-50))gy=groundH(bx,bz)??0;
+  const h=r.y-0.02-gy,θ=Math.atan2(ut-0.12,h),L=Math.hypot(h,ut-0.12);stigeForm(L);STIGE.position.set(bx,gy,bz);STIGE.rotation.set(0,r.akse==='z'?0:Math.PI/2,0);
+  STIGE.getObjectByName('helning').rotation.set(0,0,θ*r.ut*(r.akse==='z'?1:-1));STIGE.visible=true;MT.stigePos={r,v:p.v,x:bx,z:bz,gy};const a=ac();if(a)sus(600,200,0.2,0.3,0.7,'lowpass')}
+function klatreOpp(){const s=MT.stigePos,r=s.r;MT.påStige=true;walkOn=false;MT.topp={x:r.akse==='z'?r.fast+r.ut*0.42:s.v,y:r.y-0.25,z:r.akse==='z'?s.v:r.fast+r.ut*0.42};
+  wyaw=r.akse==='z'?(r.ut>0?Math.PI/2:-Math.PI/2):(r.ut>0?0:Math.PI);wyaw=yawTo(MT.topp.x,MT.topp.z,r.akse==='z'?r.fast:s.v,r.akse==='z'?s.v:r.fast);wpitch=0.1}
+function klatreNed(){MT.påStige=false;walkOn=true;wT=performance.now();const s=MT.stigePos,r=s.r;wPlace(r.akse==='z'?s.x+r.ut*0.5:s.x,r.akse==='z'?s.z:s.z+r.ut*0.5,null,wyaw)}
+function heng(){const s=MT.stigePos,r=s.r,n=MTN[MT.niv];let best=null,bd=1e9;MT.seg.forEach(q=>{if(q.hengt||q.r!==r)return;const d=Math.abs((q.a+q.b)/2-s.v);if(d<bd){bd=d;best=q}});
+  if(!best){toast('Her er det ferdig – flytt stigen');return}
+  if(bd>n.rek+0.55){MT.tid+=10;MT.falt++;toast('Du strakk deg for langt og falt! +10 s');const a=ac();if(a){sus(900,120,0.4,0.6,0.6,'lowpass')}klatreNed();return}
+  if(bd>n.rek){toast('For langt unna – flytt stigen nærmere');return}
+  best.hengt=true;best.g.visible=true;best.kr.visible=false;montHud();const a=ac();if(a){const t=a.currentTime;tone(880,t,0.12,0.12,'triangle');tone(1175,t+0.08,0.15,0.12,'triangle')}
+  const igjen=MT.seg.filter(q=>!q.hengt).length;toast(igjen?`Hengt opp! ${igjen} igjen`:'Alt er hengt opp – plugg inn ved utekontakten!')}
+function plugg(){MT.plugget=true;MT.seg.forEach(s=>s.g.children.forEach(m=>{if(m.isMesh&&m.userData.farge)m.material.color.set(m.userData.farge)}));JUL.parts.forEach(p=>p.visible=true);JUL.lights.forEach(l=>l.visible=true);LYKTER.forEach(l=>l.visible=true);
+  sfxSlutt();G.ending=true;setTimeout(()=>{if(G.mode!=='montor')return;G.on=false;G.paused=true;if(document.pointerLockElement)document.exitPointerLock();const k='montor-best-'+MT.niv,b=LS.get(k,null),rek=b==null||MT.tid<b;if(rek)LS.set(k,MT.tid);
+    $('gDK').textContent='Julelysene er på!';$('gDT').textContent=fmtT(MT.tid);$('gDInfo').innerHTML=(rek?'<b>Ny rekord!</b> ':`Rekorden er ${fmtT(b)}. `)+`${MT.seg.length} lysslynger hengt opp`+(MT.falt?`, ${MT.falt} fall (+${MT.falt*10} s).`:', uten å falle.');$('gDone').hidden=false},2200)}
+function montStep(dt,now){const n=MTN[MT.niv];MT.tid+=dt;const igjen=n.tid-MT.tid;$('gTime').textContent=fmtT(Math.max(0,igjen));$('gTime').classList.toggle('warn',igjen<30);
+  if(!MT.skumring&&igjen<n.tid*0.25){MT.skumring=true;if(!LYS.kveld)$('tKveld').click();JUL.parts.forEach(p=>p.visible=false);JUL.lights.forEach(l=>l.visible=false);LYKTER.forEach(l=>l.visible=false);toast('Det begynner å bli mørkt!')}
+  if(igjen<=0&&!G.ending){G.ending=true;sfxSlutt();setTimeout(()=>{G.on=false;G.paused=true;$('gDK').textContent='Det ble mørkt!';$('gDT').textContent=`${MT.seg.filter(s=>s.hengt).length} / ${MT.seg.length}`;$('gDInfo').textContent='Du rakk ikke å henge opp alle lysene før mørket kom.';$('gDone').hidden=false},900);return}
+  MT.seg.forEach(s=>{if(!s.hengt)s.kr.children.forEach(k=>k.rotation.y=now/400)});
+  if(MT.plugget)MT.seg.forEach(s=>s.g.children.forEach((m,i)=>{if(m.isMesh&&m.userData.farge)m.visible=Math.sin(now/300+i)>-0.7}));
+  if(MT.påStige){const t=MT.topp;camera.position.set(t.x,t.y,t.z);camera.rotation.order='YXZ';camera.rotation.set(wpitch,wyaw,0);
+    // nærmeste ledige del: grønn = rekker, gul = for langt
+    const s=MT.stigePos;let bd=1e9;MT.seg.forEach(q=>{if(!q.hengt&&q.r===s.r)bd=Math.min(bd,Math.abs((q.a+q.b)/2-s.v))});
+    målTekst(bd<=n.rek?'Du rekker en lysslynge herfra.':bd<1e8?'Det er for langt å strekke seg – klatre ned og flytt stigen.':'Alt er hengt opp her.');
+    visPrompt(bd<=n.rek+0.55?'for å henge opp lysene':'for å klatre ned');MT.prompt=bd<=n.rek+0.55?'heng':'ned';$('gPrompt').innerHTML+=bd<=n.rek+0.55?'<br><small>'+(isTouch?'Hold <b>Bruk</b> lenger':'Q')+' for å klatre ned</small>':'';return}
+  const alle=MT.seg.every(s=>s.hengt);
+  if(alle){målTekst('Alle lysene henger! Plugg inn ved utekontakten ved inngangsdøra.');const d=Math.hypot(KONTAKT.position.x-wp.x,KONTAKT.position.z-wp.z);MT.prompt=d<1.6?'plugg':null;visPrompt(MT.prompt?'for å plugge inn julelysene':null);hudPil(KONTAKT.position.x,0.5,KONTAKT.position.z,'Utekontakten');return}
+  $('gHint').hidden=true;
+  const p=rennerNær();const st=MT.stigePos;const vedStige=st&&STIGE.visible&&Math.hypot(st.x-wp.x,st.z-wp.z)<1.2;
+  if(vedStige){MT.prompt='opp';visPrompt('for å klatre opp – eller gå bort og trykk igjen for å flytte stigen');målTekst(`Klatre opp stigen ved ${st.r.navn}.`)}
+  else if(p){MT.prompt={sett:p};visPrompt('for å sette opp stigen her');målTekst(`Sett stigen inntil takrenna (${p.r.navn}) under en lysslynge som mangler.`)}
+  else{MT.prompt=null;visPrompt(null);const rest=MT.seg.filter(s=>!s.hengt).map(s=>s.r.navn);målTekst(`Gå bort til takrenna på ${rest[0]} for å sette opp stigen.`)}}
+function montBruk(lang){const p=MT.prompt;if(!p)return;if(MT.påStige){if(lang||p==='ned')klatreNed();else heng();return}if(p==='opp')klatreOpp();else if(p==='plugg')plugg();else if(p.sett)settStige(p.sett)}
+// på stigen: se rundt med fingeren (vanlig dra-for-å-se virker bare når du går)
+{let ld=null;cv.addEventListener('pointerdown',e=>{if(G.mode==='montor'&&MT.påStige&&isTouch)ld={x:e.clientX,y:e.clientY,id:e.pointerId}});
+ cv.addEventListener('pointermove',e=>{if(!ld||e.pointerId!==ld.id)return;wyaw-=(e.clientX-ld.x)*0.005;wpitch=Math.max(-1.2,Math.min(1.2,wpitch-(e.clientY-ld.y)*0.005));ld.x=e.clientX;ld.y=e.clientY});
+ addEventListener('pointerup',()=>{ld=null})}
+
+/* ---------------- Elektrikerjobben ---------------- */
+const ELN={lett:{n:5,typer:['brudd'],straff:15,sikt:false},middels:{n:7,typer:['brudd','overgang'],straff:20,sikt:true},vanskelig:{n:9,typer:['brudd','overgang'],straff:25,sikt:true}};
+const EL={pkt:[],feil:0,type:'brudd',kurs:1,tid:0,niv:'middels',målt:new Map(),åpnet:0,fikset:false,bil:null,prompt:null,måler:null};
+const BIL=(()=>{const g=new THREE.Group(),hv=std(0xf4f5f6,{roughness:.35,metalness:.2}),gl=std(0x1d2733,{roughness:.1,metalness:.4}),sv=std(0x18191b,{roughness:.8});
+  const k=new THREE.Mesh(new THREE.BoxGeometry(4.4,1.2,1.85),hv);k.position.y=0.95;g.add(k);const t=new THREE.Mesh(new THREE.BoxGeometry(3.0,0.75,1.8),hv);t.position.set(-0.55,1.9,0);g.add(t);
+  const pa=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.6,1.78),hv);pa.position.set(1.15,1.75,0);pa.rotation.z=-0.55;g.add(pa);
+  const fr=new THREE.Mesh(new THREE.BoxGeometry(0.05,0.55,1.6),gl);fr.position.set(1.3,1.8,0);fr.rotation.z=-0.55;g.add(fr);
+  [-1,1].forEach(s=>{const w=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.45,0.02),gl);w.position.set(0.55,1.85,s*0.92);g.add(w);
+    [-1.4,1.35].forEach(x=>{const h=new THREE.Mesh(new THREE.CylinderGeometry(0.33,0.33,0.25,18),sv);h.rotation.x=Math.PI/2;h.position.set(x,0.33,s*0.85);g.add(h)})});
+  const c=document.createElement('canvas');c.width=512;c.height=128;const x=c.getContext('2d');x.fillStyle='#f4f5f6';x.fillRect(0,0,512,128);x.fillStyle='#c8202c';x.font='bold 56px Inter,Arial';x.fillText('ELEKTRO',20,80);x.fillStyle='#1d2733';x.font='600 30px Inter,Arial';x.fillText('Service · 24/7',290,80);
+  [-1,1].forEach(s=>{const p=new THREE.Mesh(new THREE.PlaneGeometry(2.4,0.6),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c)}));p.position.set(-0.6,1.05,s*0.93);if(s<0)p.rotation.y=Math.PI;g.add(p)});
+  g.visible=false;XM.add(g);return g})();
+function elPunkt(type,x,y,z,ry,rom){const g=new THREE.Group(),hv=std(0xf3f3f0,{roughness:.6});
+  if(type==='kontakt'){const b=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.08,0.03),hv);g.add(b);[-0.015,0.015].forEach(dx=>{const h=new THREE.Mesh(new THREE.CylinderGeometry(0.005,0.005,0.01,6),std(0x333333));h.rotation.x=Math.PI/2;h.position.set(dx,0,0.016);g.add(h)})}
+  else{const b=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.1,0.04),hv);g.add(b);const l=new THREE.Mesh(new THREE.BoxGeometry(0.085,0.085,0.008),std(0xe6e6e0));l.position.z=0.022;l.name='lokk';g.add(l)}
+  g.position.set(x,y,z);g.rotation.y=ry;XM.add(g);return{g,type,rom,x,y,z,åpnet:false}}
+function veggPunkt(rom,høyde){// et tilfeldig sted på veggen i rommet, med retning inn i rommet
+  for(let i=0;i<40;i++){const p=rom.poly,k=Math.floor(Math.random()*p.length),a=p[k],b=p[(k+1)%p.length],L=Math.hypot(b[0]-a[0],b[1]-a[1]);if(L<1)continue;const t=0.2+Math.random()*0.6;
+    let x=a[0]+(b[0]-a[0])*t,z=a[1]+(b[1]-a[1])*t;let nx=-(b[1]-a[1])/L,nz=(b[0]-a[0])/L;if(!pip(p,x+nx*0.2,z+nz*0.2)){nx=-nx;nz=-nz}x+=nx*0.02;z+=nz*0.02;
+    const y=Y[rom.lv]+høyde;if(!ledig(x+nx*0.15,Y[rom.lv],z+nz*0.15,smaObj())&&høyde<1)continue;return{x,y,z,ry:Math.atan2(nx,nz)}}return null}
+const KLAGE={'-F1':'i kjelleren','-F2':'i stua','-F3':'på kjøkkenet','-F4':'i gangen','-F5':'i andre etasje'};
+function startEl(){gåStart('elektro');EL.niv=NIV('elektro');const n=ELN[EL.niv];dagSett();
+  EL.pkt.forEach(p=>XM.remove(p.g));EL.pkt=[];EL.målt=new Map();EL.kurs=[0,1,2,3,4][Math.floor(Math.random()*5)];const k=KURS[EL.kurs];EL.type=n.typer[Math.floor(Math.random()*n.typer.length)];
+  const rom=rooms.filter(r=>k.rom.includes(r.id)&&r.poly&&!['u-kott','u-balk','b-trapp','kjtrapp','trapp'].includes(r.id));
+  for(let i=0;i<n.n*3&&EL.pkt.length<n.n;i++){const r=rom[i%rom.length],type=Math.random()<0.55?'kontakt':'boks',q=veggPunkt(r,type==='kontakt'?0.3:2.15);if(!q)continue;
+    if(EL.pkt.some(o=>Math.hypot(o.x-q.x,o.z-q.z)<1.2&&Math.abs(o.y-q.y)<1))continue;EL.pkt.push(elPunkt(type,q.x,q.y,q.z,q.ry,r))}
+  // rekkefølgen på kursen: fra sikringsskapet og videre til nærmeste punkt
+  const ord=[];let cx=SKAP.x,cz=SKAP.z,cy=SKAP.y;const rest=EL.pkt.slice();while(rest.length){rest.sort((a,b)=>Math.hypot(a.x-cx,a.z-cz)+Math.abs(a.y-cy)*2-(Math.hypot(b.x-cx,b.z-cz)+Math.abs(b.y-cy)*2));const p=rest.shift();ord.push(p);cx=p.x;cz=p.z;cy=p.y}EL.pkt=ord;
+  EL.feil=1+Math.floor(Math.random()*(EL.pkt.length-1));Object.assign(EL,{tid:0,åpnet:0,fikset:false});
+  BIL.visible=true;const bx=16.5,bz=-3.2,by=groundH(bx,bz)??0;BIL.position.set(bx,by,bz);BIL.rotation.y=0.25;
+  const sx=bx-3.2,sz=bz+0.6;wPlace(sx,sz,null,yawTo(sx,sz,W/2,D/2));
+  const sist=EL.pkt[EL.pkt.length-1],stedT=KLAGE[k.id]||'';
+  $('gMeter').hidden=false;meterVis('— — —','');
+  målTekst(`Kunden ringer: «Det er ${EL.type==='brudd'?'ingen strøm':'noe rart med strømmen – lyset blafrer og kontaktene blir varme –'} ${stedT}!» Mål deg fram fra sikringsskapet (${k.id}) i kjelleren.`);
+  toast('Ny jobb!');const a=ac();if(a){const t=a.currentTime;[0,0.25].forEach(d=>{tone(880,t+d,0.18,0.12,'square');tone(660,t+d+0.09,0.18,0.12,'square')})}}
+function elRydd(){EL.pkt.forEach(p=>XM.remove(p.g));EL.pkt=[];BIL.visible=false;$('gMeter')&&($('gMeter').hidden=true)}
+function verdi(i){// i=-1 er sikringsskapet
+  if(i<0||i<EL.feil||EL.fikset)return{v:'230',enhet:'V',ok:true};if(EL.type==='brudd')return{v:'0',enhet:'V',ok:false};
+  return{v:String(186+Math.floor(Math.random()*14)),enhet:'V',ok:false}}
+function meterVis(v,enhet,klasse){$('gMeterV').textContent=v;$('gMeterE').textContent=enhet;$('gMeter').className=klasse||''}
+function mål(i){const r=verdi(i);meterVis('· · ·','');const a=ac();if(a)tone(1400,a.currentTime,0.05,0.08,'square');
+  setTimeout(()=>{meterVis(r.v,r.enhet,r.ok?'ok':'feil');if(i>=0){EL.målt.set(i,r);const p=EL.pkt[i];p.g.children[0].material=std(r.ok?0xe8f5e6:0xf7e2e0,{roughness:.6})}},500)}
+function åpne(i){const p=EL.pkt[i];if(p.åpnet)return;p.åpnet=true;const l=p.g.getObjectByName('lokk');if(l){l.position.z=0.06;l.rotation.x=0.9}
+  if(i===EL.feil){EL.fikset=true;const a=ac();if(a)sus(1500,500,0.2,0.3,0.8,'bandpass');toast(EL.type==='brudd'?'Løs leder i klemmen – skrudd fast!':'Svidd klemme med dårlig kontakt – byttet!');
+    setTimeout(()=>{if(G.mode!=='elektro')return;sfxSlutt();G.ending=true;setTimeout(()=>{G.on=false;G.paused=true;if(document.pointerLockElement)document.exitPointerLock();const k='elektro-best-'+EL.niv,b=LS.get(k,null),rek=b==null||EL.tid<b;if(rek)LS.set(k,EL.tid);
+      $('gDK').textContent='Jobben er ferdig!';$('gDT').textContent=fmtT(EL.tid);$('gDInfo').innerHTML=(rek?'<b>Ny rekord!</b> ':`Rekorden er ${fmtT(b)}. `)+`Feilen var ${EL.type==='brudd'?'et brudd':'en dårlig forbindelse (overgang)'} i ${p.type==='boks'?'en koblingsboks':'en stikkontakt'} på ${KURS[EL.kurs].id}, ${p.rom.name.toLowerCase()}. ${EL.målt.size} målinger`+(EL.åpnet?`, ${EL.åpnet} feil åpnet (+${EL.åpnet*ELN[EL.niv].straff} s).`:'.');$('gDone').hidden=false},900)},900)}
+  else{EL.åpnet++;EL.tid+=ELN[EL.niv].straff;toast(`Alt ser fint ut her. +${ELN[EL.niv].straff} s`);const a=ac();if(a)tone(220,a.currentTime,0.25,0.12,'sawtooth')}}
+function elStep(dt,now){const n=ELN[EL.niv];EL.tid+=dt;$('gTime').textContent=fmtT(EL.tid);
+  let pr=null,bd=1e9;
+  if(lvOf(wp.y)==='B'&&Math.hypot(camera.position.x-SKAP.x,camera.position.z-SKAP.z)<1.9){pr={i:-1}}
+  else EL.pkt.forEach((p,i)=>{const h=sikt(p.x,p.y,p.z,1.3,n.sikt);if(h!==false&&h<bd){bd=h;pr={i}}});
+  EL.prompt=pr;
+  if(pr){const p=pr.i<0?null:EL.pkt[pr.i];const navn=pr.i<0?`kursen ${KURS[EL.kurs].id} i sikringsskapet`:p.type==='boks'?'koblingsboksen':'stikkontakten';
+    $('gPrompt').hidden=false;$('gPrompt').innerHTML=(isTouch?'<b>Bruk</b>':'<b>E</b>')+` måler ${navn}`+(pr.i>=0&&!p.åpnet?(isTouch?' · hold <b>Bruk</b> for å åpne':' · <b>Q</b> åpner'):'');$('gBrukB').classList.add('klar')}
+  else{$('gPrompt').hidden=true;$('gBrukB').classList.remove('klar')}}
+function elBruk(lang){const p=EL.prompt;if(!p)return;if(lang&&p.i>=0)åpne(p.i);else mål(p.i)}
+// felles taster og «Bruk»-knappen for de nye spillene (E = bruk, Q = alternativ, C = huk)
+addEventListener('keydown',e=>{if(G.mode==='montor'&&MT.påStige&&G.on&&e.code==='Escape'){gamePause();return}if(!G.on||G.paused||e.repeat)return;
+  if(G.mode==='gjem'&&(e.code==='KeyC'||e.code==='ControlLeft')){G.huk=!G.huk;$('gHukB').classList.toggle('on',G.huk)}
+  if(G.mode==='montor'&&(e.code==='KeyE'||e.code==='Enter'))montBruk(false);if(G.mode==='montor'&&e.code==='KeyQ'&&MT.påStige)klatreNed();
+  if(G.mode==='elektro'&&(e.code==='KeyE'||e.code==='Enter'))elBruk(false);if(G.mode==='elektro'&&e.code==='KeyQ')elBruk(true)});
+{let t0=0,tm=null;const b=$('gBrukB');b.addEventListener('pointerdown',()=>{if(G.mode!=='montor'&&G.mode!=='elektro')return;t0=performance.now();tm=setTimeout(()=>{tm=null;if(G.mode==='montor')montBruk(true);else elBruk(true)},600)});
+ b.addEventListener('pointerup',()=>{if(G.mode!=='montor'&&G.mode!=='elektro')return;if(tm){clearTimeout(tm);tm=null;if(G.mode==='montor')montBruk(false);else elBruk(false)}})}
+$('gHukB').addEventListener('pointerdown',e=>{e.preventDefault();G.huk=!G.huk;$('gHukB').classList.toggle('on',G.huk)});
+
 /* ---------- oppstart ---------- */
-window.__spill={YT,ytelse,flG,PK,ST,KURS,startPakke,startStrom,pakkeStep,stromStep,skapÅpne,trekkUt,AK,akeStep,startAke,NIS,S,G,fang,SNO,kast,snoStep,snoFysikk,sim:(n,dt)=>{for(let i=0;i<n;i++){SNO.ms+=dt*1000;snoFysikk(dt,SNO.ms);if(G.on&&!G.paused)snoStep(dt,SNO.ms)}}};
+window.__spill={GJ,MT,EL,startGjem,startMont,startEl,gjemStep,montStep,elStep,montBruk,elBruk,settStige,klatreOpp,heng,romGraf,åpne,mål,YT,ytelse,flG,PK,ST,KURS,startPakke,startStrom,pakkeStep,stromStep,skapÅpne,trekkUt,AK,akeStep,startAke,NIS,S,G,fang,SNO,kast,snoStep,snoFysikk,sim:(n,dt)=>{for(let i=0;i<n;i++){SNO.ms+=dt*1000;snoFysikk(dt,SNO.ms);if(G.on&&!G.paused)snoStep(dt,SNO.ms)}}};
 ui.classList.add('menu');setLevel('A');controls.autoRotate=true;menyKamera();
 const klar=()=>{$('gStart').disabled=false;$('gStart').textContent='Start'};
 const t0=performance.now();(function vent(){if((typeof droneG!=='undefined'&&droneG.children.length>0&&terrainMesh)||performance.now()-t0>15000){tidSett();ytelseStart();klar()}else setTimeout(vent,300)})();
