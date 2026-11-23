@@ -229,21 +229,21 @@ const ui=document.createElement('div');ui.id='spill';ui.innerHTML=`
 <div id="gDone" class="gOv" hidden><div class="gPanel sm"><p class="gKick" id="gDK">Alle nissene er funnet!</p><h2 id="gDT">0:00</h2><p id="gDInfo"></p><button id="gIgjen" class="gGo">Spill igjen</button><button id="gMeny2" class="gSec">Til menyen</button></div></div>`;
 document.body.appendChild(ui);
 const HELP={make:isTouch?'Gå framover med spaken, så tar spaden snøen foran deg. Når spaden er full, trykk <b>Kast</b>. Måk minst 92 % før tiden er ute.'
-  :'<b>W</b> skyver spaden framover og tar snøen · <b>E</b> kaster snøen når spaden er full · <b>Shift</b> spurter · <b>Esc</b> pause. Måk minst 92 % før tiden er ute.',
+  :'<b>W</b> skyver spaden framover og tar snøen · <b>F</b> kaster snøen når spaden er full · <b>Shift</b> spurter · <b>Esc</b> pause. Måk minst 92 % før tiden er ute.',
   tak:isTouch?'Gå med spaken og dra for å se rundt. <b>Hopp</b> hopper. Taket er glatt – du sklir nedover på bratte flater. Faller du ned, starter du igjen fra sist trygge sted (+5 s).'
   :'<b>W A S D</b> går · <b>Shift</b> løper · <b>Mellomrom</b> hopper · <b>Mus</b> styrer kameraet. Taket er glatt! Faller du ned, starter du på nytt fra sist trygge sted (+5 s).',
   drone:isTouch?'Spaken flyr fram/bak/sidelengs, dra for å snu. <b>▲ ▼</b> stiger og synker, <b>Spurt</b> gir full fart. Fly gjennom de gule ringene i rekkefølge og <b>Slipp</b> pakka ned i pipa til slutt.'
-  :'<b>W A S D</b> flyr · <b>Mus</b> snur · <b>Mellomrom</b>/<b>C</b> stiger/synker · <b>Shift</b> full fart · <b>E</b> slipper pakka. Fly gjennom de gule ringene og slipp pakka ned i pipa.',
+  :'<b>W A S D</b> flyr · <b>Mus</b> snur · <b>Mellomrom</b>/<b>C</b> stiger/synker · <b>Shift</b> full fart · <b>F</b> slipper pakka. Fly gjennom de gule ringene og slipp pakka ned i pipa.',
   gjem:isTouch?'Du har litt tid på å gjemme deg inne i huset. Så leter nissen. Bjellene på lua forteller hvor han er. <b>Huk</b> gjør deg vanskeligere å se, og spurting hører han.'
   :'<b>W A S D</b> går · <b>C</b> huk (vanskeligere å se) · <b>Shift</b> spurter, men nissen hører deg · <b>Esc</b> pause. Gjem deg inne i huset – bjellene på lua forteller hvor nissen er.',
   montor:isTouch?'Gå bort til takrenna og trykk <b>Bruk</b> for å sette opp stigen. Klatre opp og heng opp lysene du rekker. Hold <b>Bruk</b> for å klatre ned. Strekker du deg for langt, faller du.'
-  :'<b>E</b> setter opp stigen / klatrer opp / henger opp lysene · <b>Q</b> klatrer ned · strekker du deg for langt, faller du (+10 s). Til slutt plugges lysene inn ved utekontakten.',
+  :'<b>F</b> setter opp stigen / klatrer opp / henger opp lysene · <b>G</b> klatrer ned · strekker du deg for langt, faller du (+10 s). Til slutt plugges lysene inn ved utekontakten.',
   elektro:isTouch?'Mål med <b>Bruk</b> på kursen i sikringsskapet, stikkontakter og koblingsbokser. Hold <b>Bruk</b> for å åpne en boks eller kontakt. Feil åpnet koster tid.'
-  :'<b>E</b> måler (sikringsskapet, stikkontakter, koblingsbokser) · <b>Q</b> åpner boksen eller kontakten · feil åpnet koster tid. Finn det første punktet der målingen ikke stemmer.',
+  :'<b>F</b> måler (sikringsskapet, stikkontakter, koblingsbokser) · <b>G</b> åpner boksen eller kontakten · feil åpnet koster tid. Finn det første punktet der målingen ikke stemmer.',
   pakke:isTouch?'Gå til juletreet for å fylle sekken (3 pakker om gangen). Gå inn i rommet som står på pakken for å levere den. <b>Spurt</b> gjør deg raskere.'
   :'<b>Mus</b> ser rundt · <b>W A S D</b> går · <b>Shift</b> spurter · <b>Esc</b> pause. Fyll sekken ved juletreet (3 pakker om gangen) og gå inn i rommet som står på pakken for å levere den.',
   strom:isTouch?'Du har bare en lommelykt. Finn sikringsskapet i kjelleren, få strømmen tilbake og finn feilen. <b>Bruk</b> åpner skapet og trekker ut kontakter. Batterier på gulvet gir lommelykta mer strøm.'
-  :'<b>Mus</b> ser rundt · <b>W A S D</b> går · <b>Shift</b> spurter · <b>E</b> åpner skapet / trekker ut kontakter · <b>Esc</b> pause. Finn sikringsskapet i kjelleren og få lyset tilbake. Feilen kan være inne, ute ved julelysene eller ved garasjen. På middels og vanskelig står det flere kontakter rundt omkring – feil kontakt koster 10 s, og på vanskelig er det også noe som overbelaster en kurs.',ake:isTouch?'<b>◀ ▶</b> styrer · <b>Brems</b> bremser · <b>Skyv</b> gir fart på flate partier · <b>Hopp</b> hopper. Kjør gjennom portene (bom gir +3 s) og ta pakkene (−0,3 s hver).'
+  :'<b>Mus</b> ser rundt · <b>W A S D</b> går · <b>Shift</b> spurter · <b>F</b> åpner skapet / trekker ut kontakter · <b>Esc</b> pause. Finn sikringsskapet i kjelleren og få lyset tilbake. Feilen kan være inne, ute ved julelysene eller ved garasjen. På middels og vanskelig står det flere kontakter rundt omkring – feil kontakt koster 10 s, og på vanskelig er det også noe som overbelaster en kurs.',ake:isTouch?'<b>◀ ▶</b> styrer · <b>Brems</b> bremser · <b>Skyv</b> gir fart på flate partier · <b>Hopp</b> hopper. Kjør gjennom portene (bom gir +3 s) og ta pakkene (−0,3 s hver).'
   :'<b>A D</b> eller <b>piltastene</b> styrer · <b>S</b> bremser · <b>W</b> skyver på flate partier · <b>Mellomrom</b> hopper · <b>R</b> ny tur · <b>Esc</b> pause. Bom på en port gir +3 s, hver pakke gir −0,3 s.',nisse:null,sno:isTouch?'Venstre tommel: gå med spaken · Høyre tommel: dra for å sikte · <b>Kast</b> kaster en snøball mot sikte-prikken · <b>Spurt</b> for å komme deg unna. Treff på hodet gir 2 poeng.'
   :'<b>Mus</b> sikter · <b>Venstreklikk</b> kaster · <b>W A S D</b> går · <b>Shift</b> spurter · <b>Mellomrom</b> hopper · <b>M</b> musikk · <b>Esc</b> pause. Treff på hodet gir 2 poeng.'};
 HELP.nisse=isTouch?'Venstre tommel: gå med spaken · Høyre tommel: dra for å se rundt · <b>Spurt</b> slår på løping · Trykk på en nisse for å ta den, eller gå helt bort til den.'
@@ -798,7 +798,7 @@ function trekkUt(d){d=d||ST.dev.find(q=>q.userData.feil);if(!d||d.userData.ute)r
   if(d.userData.feil){ST.fikset=true;d.userData.gl.intensity=0;d.userData.sp.forEach(s=>s.m.visible=false);d.userData.rk.forEach(r=>r.visible=false);settMål(4);toast('Feilen er fjernet!');if(alleOk())stromFerdig()}
   else{ST.tid+=10;toast('Den var hel. +10 s');if(a)tone(220,a.currentTime+0.05,0.25,0.12,'sawtooth')}}
 function ovnAv(){ST.ovnAv=true;const a=ac();if(a)tone(600,a.currentTime,0.06,0.2,'square');stromLys();toast('Varmeovnen er slått av');if(alleOk())stromFerdig()}
-addEventListener('keydown',e=>{if(G.mode!=='strom'||!G.on||G.paused)return;if(e.code==='KeyE'||e.code==='Enter')bruk();if(ST.skapÅpen&&/^Digit[0-7]$/.test(e.code)){const n=+e.code.slice(5);const b=$('gSkapK').querySelector(`.sk-b[data-i="${n===0?'h':n-1}"]`);if(b)b.click()}});
+addEventListener('keydown',e=>{if(G.mode!=='strom'||!G.on||G.paused)return;if(e.code==='KeyF'||e.code==='Enter')bruk();if(ST.skapÅpen&&/^Digit[0-7]$/.test(e.code)){const n=+e.code.slice(5);const b=$('gSkapK').querySelector(`.sk-b[data-i="${n===0?'h':n-1}"]`);if(b)b.click()}});
 $('gBrukB').addEventListener('pointerdown',e=>{e.preventDefault();bruk()});
 function stromFerdig(){settMål(5);G.ending=true;stromLys();sfxSlutt();setTimeout(()=>{if(G.mode!=='strom')return;G.on=false;G.paused=true;$('gSkap').hidden=true;
   const k='strom-best-'+ST.niv,b=LS.get(k,null),rek=b==null||ST.tid<b;if(rek)LS.set(k,ST.tid);
@@ -827,7 +827,7 @@ function stromStep(dt,now){const n=SNIV[ST.niv];if(!ST.skapÅpen)ST.tid+=dt;$('g
   if(lvOf(wp.y)==='B'&&Math.hypot(c.x-SKAP.x,c.z-SKAP.z)<1.9)pr='skap';
   else{for(const q of ST.dev){if(q.userData.ute)continue;const h=ser(q.position.x,q.position.y,q.position.z,n.rek);if(h!==false&&h<bd){bd=h;pr=q}}
     if(ST.ovn&&!ST.ovnAv){const h=ser(ST.ovn.position.x,ST.ovn.position.y+0.3,ST.ovn.position.z,1.3);if(h!==false&&h<bd){bd=h;pr='ovn'}}}
-  ST.prompt=pr;const pe=$('gPrompt');pe.hidden=!pr;if(pr)pe.innerHTML=(isTouch?'Trykk <b>Bruk</b>':'Trykk <b>E</b>')+(pr==='skap'?' for å åpne sikringsskapet':pr==='ovn'?' for å slå av varmeovnen':' for å trekke ut kontakten');
+  ST.prompt=pr;const pe=$('gPrompt');pe.hidden=!pr;if(pr)pe.innerHTML=(isTouch?'Trykk <b>Bruk</b>':'Trykk <b>F</b>')+(pr==='skap'?' for å åpne sikringsskapet':pr==='ovn'?' for å slå av varmeovnen':' for å trekke ut kontakten');
   $('gBrukB').classList.toggle('klar',!!pr)}
 
 seg('oP','p',PK.N,v=>{PK.N=+v;LS.set('pakke-n',PK.N);visBest()});seg('oPil','pil',PK.pil?1:0,v=>{PK.pil=v==='1';LS.set('pakke-pil',PK.pil)});
@@ -843,7 +843,7 @@ function dagSett(){if(LYS.kveld)$('tKveld').click();if(!LYS.on&&$('tLys'))$('tLy
 const _e1=new THREE.Vector3(),_e2=new THREE.Vector3();
 function sikt(x,y,z,r,strengt){const c=camera.position,dx=x-wp.x,dz=z-wp.z,h=Math.hypot(dx,dz);if(h>r||Math.abs(y-(wp.y+0.8))>1.6)return false;if(!strengt)return h;
   camera.getWorldDirection(_e1);_e2.set(x-c.x,y-c.y,z-c.z).normalize();return _e2.dot(_e1)>0.8?h:false}
-function visPrompt(tekst){const pe=$('gPrompt');pe.hidden=!tekst;if(tekst)pe.innerHTML=(isTouch?'Trykk <b>Bruk</b>':'Trykk <b>E</b>')+' '+tekst;$('gBrukB').classList.toggle('klar',!!tekst)}
+function visPrompt(tekst){const pe=$('gPrompt');pe.hidden=!tekst;if(tekst)pe.innerHTML=(isTouch?'Trykk <b>Bruk</b>':'Trykk <b>F</b>')+' '+tekst;$('gBrukB').classList.toggle('klar',!!tekst)}
 function målTekst(t){const e=$('gMål');if(e.textContent===t)return;e.textContent=t;e.classList.remove('ny');void e.offsetWidth;e.classList.add('ny')}
 
 /* ---------------- Gjemsel ---------------- */
@@ -965,7 +965,7 @@ function montStep(dt,now){const n=MTN[MT.niv];MT.tid+=dt;const igjen=n.tid-MT.ti
     // nærmeste ledige del: grønn = rekker, gul = for langt
     const s=MT.stigePos;let bd=1e9;MT.seg.forEach(q=>{if(!q.hengt&&q.r===s.r)bd=Math.min(bd,Math.abs((q.a+q.b)/2-s.v))});
     målTekst(bd<=n.rek?'Du rekker en lysslynge herfra.':bd<1e8?'Det er for langt å strekke seg – klatre ned og flytt stigen.':'Alt er hengt opp her.');
-    visPrompt(bd<=n.rek+0.55?'for å henge opp lysene':'for å klatre ned');MT.prompt=bd<=n.rek+0.55?'heng':'ned';$('gPrompt').innerHTML+=bd<=n.rek+0.55?'<br><small>'+(isTouch?'Hold <b>Bruk</b> lenger':'Q')+' for å klatre ned</small>':'';return}
+    visPrompt(bd<=n.rek+0.55?'for å henge opp lysene':'for å klatre ned');MT.prompt=bd<=n.rek+0.55?'heng':'ned';$('gPrompt').innerHTML+=bd<=n.rek+0.55?'<br><small>'+(isTouch?'Hold <b>Bruk</b> lenger':'<b>G</b>')+' for å klatre ned</small>':'';return}
   const alle=MT.seg.every(s=>s.hengt);
   if(alle){målTekst('Alle lysene henger! Plugg inn ved utekontakten ved inngangsdøra.');const d=Math.hypot(KONTAKT.position.x-wp.x,KONTAKT.position.z-wp.z);MT.prompt=d<1.6?'plugg':null;visPrompt(MT.prompt?'for å plugge inn julelysene':null);hudPil(KONTAKT.position.x,0.5,KONTAKT.position.z,'Utekontakten');return}
   $('gHint').hidden=true;
@@ -1046,14 +1046,14 @@ function elStep(dt,now){const n=ELN[EL.niv];EL.tid+=dt;$('gTime').textContent=fm
   else EL.pkt.forEach((p,i)=>{const h=sikt(p.x,p.y,p.z,1.3,n.sikt);if(h!==false&&h<bd){bd=h;pr={i}}});
   EL.prompt=pr;
   if(pr){const p=pr.i<0?null:EL.pkt[pr.i];const navn=pr.i<0?`kursen ${KURS[EL.kurs].id} i sikringsskapet`:p.type==='boks'?'koblingsboksen':'stikkontakten';
-    $('gPrompt').hidden=false;$('gPrompt').innerHTML=(isTouch?'<b>Bruk</b>':'<b>E</b>')+` måler ${navn}`+(pr.i>=0&&!p.åpnet?(isTouch?' · hold <b>Bruk</b> for å åpne':' · <b>Q</b> åpner'):'');$('gBrukB').classList.add('klar')}
+    $('gPrompt').hidden=false;$('gPrompt').innerHTML=(isTouch?'<b>Bruk</b>':'<b>F</b>')+` måler ${navn}`+(pr.i>=0&&!p.åpnet?(isTouch?' · hold <b>Bruk</b> for å åpne':' · <b>G</b> åpner'):'');$('gBrukB').classList.add('klar')}
   else{$('gPrompt').hidden=true;$('gBrukB').classList.remove('klar')}}
 function elBruk(lang){const p=EL.prompt;if(!p)return;if(lang&&p.i>=0)åpne(p.i);else mål(p.i)}
 // felles taster og «Bruk»-knappen for de nye spillene (E = bruk, Q = alternativ, C = huk)
 addEventListener('keydown',e=>{if(G.mode==='montor'&&MT.påStige&&G.on&&e.code==='Escape'){gamePause();return}if(!G.on||G.paused||e.repeat)return;
   if(G.mode==='gjem'&&(e.code==='KeyC'||e.code==='ControlLeft')){G.huk=!G.huk;$('gHukB').classList.toggle('on',G.huk)}
-  if(G.mode==='montor'&&(e.code==='KeyE'||e.code==='Enter'))montBruk(false);if(G.mode==='montor'&&e.code==='KeyQ'&&MT.påStige)klatreNed();
-  if(G.mode==='elektro'&&(e.code==='KeyE'||e.code==='Enter'))elBruk(false);if(G.mode==='elektro'&&e.code==='KeyQ')elBruk(true)});
+  if(G.mode==='montor'&&(e.code==='KeyF'||e.code==='Enter'))montBruk(false);if(G.mode==='montor'&&e.code==='KeyG'&&MT.påStige)klatreNed();
+  if(G.mode==='elektro'&&(e.code==='KeyF'||e.code==='Enter'))elBruk(false);if(G.mode==='elektro'&&e.code==='KeyG')elBruk(true)});
 {let t0=0,tm=null;const b=$('gBrukB');b.addEventListener('pointerdown',()=>{if(G.mode!=='montor'&&G.mode!=='elektro')return;t0=performance.now();tm=setTimeout(()=>{tm=null;if(G.mode==='montor')montBruk(true);else elBruk(true)},600)});
  b.addEventListener('pointerup',()=>{if(G.mode!=='montor'&&G.mode!=='elektro')return;if(tm){clearTimeout(tm);tm=null;if(G.mode==='montor')montBruk(false);else elBruk(false)}})}
 $('gHukB').addEventListener('pointerdown',e=>{e.preventDefault();G.huk=!G.huk;$('gHukB').classList.toggle('on',G.huk)});
@@ -1111,7 +1111,7 @@ function makeStep(dt,now){const n=MKN[MK.niv];MK.tid+=dt;const igjen=n.tid-MK.ti
   // dyp snø gjør deg tregere
   let dyp=false;for(const c of MK.celler){if(c.d>0.05&&Math.abs(c.x-wp.x)<0.2&&Math.abs(c.z-wp.z)<0.2){dyp=true;break}}window.G_WLK=dyp?1.35:2.1;window.G_SPR=dyp?2.6:5.2;
   SPADE.position.y=Math.sin(now/180)*(fram?0.02:0);
-  const full=MK.last>=n.kap;$('gPrompt').hidden=!MK.last;$('gPrompt').innerHTML=(full?'Spaden er full! ':'')+(isTouch?'Trykk <b>Kast</b>':'Trykk <b>E</b>')+' for å kaste snøen';$('gBrukB').classList.toggle('klar',MK.last>0);$('gBrukB').textContent='Kast';
+  const full=MK.last>=n.kap;$('gPrompt').hidden=!MK.last;$('gPrompt').innerHTML=(full?'Spaden er full! ':'')+(isTouch?'Trykk <b>Kast</b>':'Trykk <b>F</b>')+' for å kaste snøen';$('gBrukB').classList.toggle('klar',MK.last>0);$('gBrukB').textContent='Kast';
   const rest=n.soner.map(k=>SONER[k]).filter(s=>MK.celler.some(c=>c.d>0.02&&c.x>=s.x0&&c.x<=s.x1&&c.z>=s.z0&&c.z<=s.z1)).map(s=>s.navn);
   målTekst(MK.pst>=0.92?'Nesten ferdig! Bra jobba.':`Måk ${rest.join(', ')}. Bilen må ut før tiden er ute.`);
   if(MK.pst>=0.92&&!G.ending){G.ending=true;sfxSlutt();setTimeout(()=>{if(G.mode!=='make')return;G.on=false;G.paused=true;if(document.pointerLockElement)document.exitPointerLock();const k='make-best-'+MK.niv,b=LS.get(k,null),rek=b==null||MK.tid<b;if(rek)LS.set(k,MK.tid);
@@ -1234,7 +1234,7 @@ function droneStep(dt,now){const n=DRN[DR.niv];parker();DR.tid+=dt;$('gTime').te
   DRONE.position.copy(DR.p);DRONE.rotation.set(0,yaw+Math.PI/2,0);DRONE.rotation.z=-DR.v.dot(_e2.set(fx,0,fz))*0.04;DRONE.rotation.x=DR.v.dot(_e2.set(rx,0,rz))*0.04;DRONE.userData.rot.forEach(q=>q.rotation.y+=dt*60);
   const ferdigRinger=DR.neste>=DR.ringer.length;const vedPipe=Math.hypot(DR.p.x-4.05,DR.p.z-3.25)<1.6&&DR.p.y>7.4;
   målTekst(ferdigRinger?(DR.pakke?'Fly over pipa på taket og slipp pakka ned i den!':'Pakka er på vei ned …'):`Fly gjennom ring ${DR.neste+1} av ${DR.ringer.length} (den gule).`);
-  $('gPrompt').hidden=!(DR.pakke);$('gPrompt').innerHTML=(isTouch?'<b>Slipp</b>':'<b>E</b>')+' slipper pakka'+(vedPipe?' – <b>du er over pipa!</b>':'');$('gBrukB').textContent='Slipp';$('gBrukB').classList.toggle('klar',vedPipe);
+  $('gPrompt').hidden=!(DR.pakke);$('gPrompt').innerHTML=(isTouch?'<b>Slipp</b>':'<b>F</b>')+' slipper pakka'+(vedPipe?' – <b>du er over pipa!</b>':'');$('gBrukB').textContent='Slipp';$('gBrukB').classList.toggle('klar',vedPipe);
   if(ferdigRinger&&!DR.slipp&&DR.pakke){hudPil(4.05,7.2,3.25,'Pipa')}else if(r){hudPil(r.x,r.y,r.z,'Ring '+(DR.neste+1))}
   // kamera bak dronen
   const d=3.6,pit=Math.max(-1.0,Math.min(0.5,wpitch)),cx=DR.p.x+Math.sin(yaw)*d*Math.cos(pit),cz=DR.p.z+Math.cos(yaw)*d*Math.cos(pit),cy=Math.max(bakke(cx,cz)+0.4,DR.p.y+0.9-Math.sin(pit)*d);
@@ -1243,10 +1243,13 @@ function droneFerdig(){if(G.ending)return;G.ending=true;sfxSlutt();rusk(_mp.set(
   const tot=DR.tid+DR.bom*5,k='drone-best-'+DR.niv,b=LS.get(k,null),rek=b==null||tot<b;if(rek)LS.set(k,tot);
   $('gDK').textContent='Pakka gikk rett ned i pipa!';$('gDT').textContent=fmtT(tot);$('gDInfo').innerHTML=(rek?'<b>Ny rekord!</b> ':`Rekorden er ${fmtT(b)}. `)+`${DR.ringer.length} ringer`+(DR.bom?`, +${DR.bom*5} s i straff.`:', uten straff.');$('gDone').hidden=false},1000)}
 // taster og knapper
-addEventListener('keydown',e=>{if(!G.on||G.paused||e.repeat)return;if(G.mode==='make'&&(e.code==='KeyE'||e.code==='Enter'))makeKast();if(G.mode==='drone'&&(e.code==='KeyE'||e.code==='Enter'))slipp()});
+addEventListener('keydown',e=>{if(!G.on||G.paused||e.repeat)return;if(G.mode==='make'&&(e.code==='KeyF'||e.code==='Enter'))makeKast();if(G.mode==='drone'&&(e.code==='KeyF'||e.code==='Enter'))slipp()});
 $('gBrukB').addEventListener('pointerdown',e=>{if(G.mode==='make'){e.preventDefault();makeKast()}else if(G.mode==='drone'){e.preventDefault();slipp()}});
 [['gOppB','dOpp'],['gNedB','dNed']].forEach(([id,k])=>{const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();G[k]=true;b.classList.add('on')});const av=()=>{G[k]=false;b.classList.remove('on')};b.addEventListener('pointerup',av);b.addEventListener('pointercancel',av);b.addEventListener('pointerleave',av)});
 
+// venstreklikk med låst mus gjør det samme som F (Bruk)
+cv.addEventListener('pointerdown',e=>{if(e.button!==0||document.pointerLockElement!==cv||!G.on||G.paused)return;
+  if(G.mode==='strom')bruk();else if(G.mode==='montor')montBruk(false);else if(G.mode==='elektro')elBruk(false);else if(G.mode==='make')makeKast();else if(G.mode==='drone')slipp()});
 /* ---------- oppstart ---------- */
 window.__spill={MK,TK,DR,startMake,startTak,startDrone,makeStep,takStep,droneStep,makeKast,slipp,flate,GJ,MT,EL,startGjem,startMont,startEl,gjemStep,montStep,elStep,montBruk,elBruk,settStige,klatreOpp,heng,romGraf,åpne,mål,YT,ytelse,flG,PK,ST,KURS,startPakke,startStrom,pakkeStep,stromStep,skapÅpne,trekkUt,AK,akeStep,startAke,NIS,S,G,fang,SNO,kast,snoStep,snoFysikk,sim:(n,dt)=>{for(let i=0;i<n;i++){SNO.ms+=dt*1000;snoFysikk(dt,SNO.ms);if(G.on&&!G.paused)snoStep(dt,SNO.ms)}}};
 ui.classList.add('menu');setLevel('A');controls.autoRotate=true;menyKamera();
