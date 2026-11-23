@@ -1927,7 +1927,7 @@ buildItems();
 function fsave(){const o={};items.forEach(it=>{const h=it.userData.home;if(Math.abs(it.position.x-h.x)>1e-3||Math.abs(it.position.z-h.z)>1e-3||Math.abs(it.rotation.y)>1e-3)o[it.userData.key]={x:it.position.x,z:it.position.z,r:it.rotation.y}});
   try{localStorage.setItem(FKEY,JSON.stringify(o))}catch(e){}}
 const fcard=document.getElementById('fcard');
-function fselect(it){fsel=it;fcard.hidden=!it;fbox.visible=!!it;if(it){select(null);const s_=it.userData.size;
+function fselect(it){if(window.__spill&&it)return;fsel=it;fcard.hidden=!it;fbox.visible=!!it;if(it){select(null);const s_=it.userData.size;
   document.getElementById('fDims').textContent='ca. '+fmt(s_.x)+' × '+fmt(s_.z)+' m, '+fmt(s_.y)+' m høyt';fbox.box.setFromObject(it)}}
 function frot(d){if(!fsel)return;fsel.rotation.y+=d*Math.PI/180;fbox.box.setFromObject(fsel);fsave()}
 document.getElementById('fL').onclick=()=>frot(15);document.getElementById('fR').onclick=()=>frot(-15);
@@ -2736,7 +2736,7 @@ document.querySelectorAll('.invBtn').forEach(b=>b.onclick=()=>invOpen(invP.hidde
 // plassering
 let plc=null;const plRay=new THREE.Raycaster();
 function ghostify(g){g.traverse(o=>{if(o.isMesh){o.material=o.material.clone();o.material.transparent=true;o.material.opacity=0.55;o.material.depthWrite=false;o.castShadow=false}})}
-function plStart(p){if(plc)plCancel();invOpen(false);plc=p;
+function plStart(p){if(window.__spill)return;if(plc)plCancel();invOpen(false);plc=p;
   p.ceil=['downlight','cup'].includes(p.t||(p.it&&p.it.userData.t));
   if(p.mode==='new'){p.obj=mkItem(p.t);ghostify(p.obj);p.obj.rotation.y=p.r||(walkOn?Math.round((wyaw+Math.PI)/(Math.PI/2))*Math.PI/2:0);scene.add(p.obj)}
   else{const it=p.it;p.prev={x:it.position.x,y:it.position.y,z:it.position.z,r:it.rotation.y,par:it.parent};const wpv=new THREE.Vector3();it.getWorldPosition(wpv);scene.attach(it);p.obj=it;fselect(null)}

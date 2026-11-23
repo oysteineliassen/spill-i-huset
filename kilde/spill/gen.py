@@ -21,6 +21,9 @@ rep("if(nw-mirT>1200){mirT=nw;mirScan()}","if(nw-mirT>1200&&!window.__noMir){mir
 rep("renderer=new THREE.WebGLRenderer({antialias:true,logarithmicDepthBuffer:true});","renderer=new THREE.WebGLRenderer({antialias:!matchMedia('(pointer:coarse)').matches,logarithmicDepthBuffer:true,powerPreference:'high-performance'});")
 # dronen: høyden på utsiktsterrenget
 rep("     return (h(j,i)*(1-a)+h(j,i+1)*a)*(1-b)+(h(j+1,i)*(1-a)+h(j+1,i+1)*a)*b};","     return (h(j,i)*(1-a)+h(j,i+1)*a)*(1-b)+(h(j+1,i)*(1-a)+h(j+1,i+1)*a)*b};window.__utsY=yAt;")
+# spillsiden: møblene står fast (ingen F for å flytte, ingen velging/flytting av møbler)
+rep("function plStart(p){","function plStart(p){if(window.__spill)return;")
+rep("function fselect(it){fsel=","function fselect(it){if(window.__spill&&it)return;fsel=")
 # spurt og fart
 rep("(K('ShiftLeft')||K('ShiftRight')?3.4:1.5)","(gSpr()?G_SPR:G_WLK)")
 # Esc gir pause i stedet for å avslutte
