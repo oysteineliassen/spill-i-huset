@@ -153,3 +153,13 @@ body.touch #gMeter{left:auto;right:max(110px,env(safe-area-inset-right,0px));bot
 #gPrompt small{font-size:12px;color:var(--g-dim)}
 #spill[data-mode=montor] #gPrompt:not([hidden]),#spill[data-mode=elektro] #gPrompt:not([hidden]){display:block!important}
 #spill[data-mode=montor] #gBrukB,#spill[data-mode=elektro] #gBrukB{display:inline-block!important}
+/* måkevakt, tak, drone */
+#spill[data-mode=make] #gMål,#spill[data-mode=tak] #gMål,#spill[data-mode=drone] #gMål{display:block!important}
+#spill[data-mode=make] #gPkN,#spill[data-mode=tak] #gPkN,#spill[data-mode=drone] #gPkN{display:flex!important}
+#spill[data-mode=make] #gPrompt:not([hidden]),#spill[data-mode=drone] #gPrompt:not([hidden]){display:block!important}
+#spill[data-mode=make] #gBrukB,#spill[data-mode=drone] #gBrukB{display:inline-block!important}
+#spill:not([data-mode=drone]) #gOppB,#spill:not([data-mode=drone]) #gNedB{display:none!important}
+#spill[data-mode=drone] #gHint{display:flex!important}
+#spill[data-mode=drone] #gHint[hidden]{display:none!important}
+body:has(#spill[data-mode=tak].playing) #wCross,body:has(#spill[data-mode=drone].playing) #wCross{display:none!important}
+#gOppB.on,#gNedB.on{background:rgba(255,255,255,.5)}

@@ -19,6 +19,8 @@ rep("const vc=LYS.on?items.filter(it=>it.userData.t==='cup'&&it.visible&&it.pare
 # ytelse: speilene kan slås av, og ingen kantutjevning på mobil (oppløsningen styres av spillet)
 rep("if(nw-mirT>1200){mirT=nw;mirScan()}","if(nw-mirT>1200&&!window.__noMir){mirT=nw;mirScan()}")
 rep("renderer=new THREE.WebGLRenderer({antialias:true,logarithmicDepthBuffer:true});","renderer=new THREE.WebGLRenderer({antialias:!matchMedia('(pointer:coarse)').matches,logarithmicDepthBuffer:true,powerPreference:'high-performance'});")
+# dronen: høyden på utsiktsterrenget
+rep("     return (h(j,i)*(1-a)+h(j,i+1)*a)*(1-b)+(h(j+1,i)*(1-a)+h(j+1,i+1)*a)*b};","     return (h(j,i)*(1-a)+h(j,i+1)*a)*(1-b)+(h(j+1,i)*(1-a)+h(j+1,i+1)*a)*b};window.__utsY=yAt;")
 # spurt og fart
 rep("(K('ShiftLeft')||K('ShiftRight')?3.4:1.5)","(gSpr()?G_SPR:G_WLK)")
 # Esc gir pause i stedet for å avslutte
